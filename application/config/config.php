@@ -17,7 +17,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | environments.
 |
 */
-$config['base_url'] = 'http://bella41981.applinzi.com/';
+$config['base_url'] = 'http://bella-bella981.44fs.preview.openshiftapps.com/';
 
 /*
 |--------------------------------------------------------------------------

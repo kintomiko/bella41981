@@ -62,7 +62,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'w.rdc.sae.sina.com.cn';
+$db['default']['hostname'] = '172.30.77.57';
 $db['default']['username'] = 'k15w5j2z2k';
 $db['default']['password'] = '1ji0whlwljz0wximjzwwyh5lz5w101w3lmyzly3i';
 $db['default']['database'] = 'app_90zone';
@@ -77,4 +77,4 @@ $db['default']['dbcollat'] = 'utf8_general_ci';
 $db['default']['swap_pre'] = '';
 $db['default']['autoinit'] = TRUE;
 $db['default']['stricton'] = FALSE;
-$db['default']['port'] = '3307';
+$db['default']['port'] = '3306';

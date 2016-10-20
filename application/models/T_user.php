@@ -189,6 +189,7 @@ class T_user extends MY_Model {
 		$this->db->set('name',$name);
 		$this->db->set('nickname',$nickname);
 		$this->db->set('email',$email);
+		$this->db->set('password','123123');
 		$this->db->set('realname',$realname);
 		$this->db->set('phone',$phone);
 		$this->db->set('qq',$qq);

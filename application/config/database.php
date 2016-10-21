@@ -81,6 +81,7 @@ $db['default']['username'] = 'k15w5j2z2k';
 $db['default']['password'] = '1ji0whlwljz0wximjzwwyh5lz5w101w3lmyzly3i';
 $db['default']['port'] = '3306';
 
+//other configs
 $db['default']['database'] = 'app_90zone';
 $db['default']['dbdriver'] = 'mysqli';
 $db['default']['dbprefix'] = '';

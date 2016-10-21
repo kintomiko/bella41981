@@ -5,8 +5,6 @@
         </a>
         <ol class="breadcrumb pull-left">
             <li><a href="club/dashboard" class="ajax-link">首页</a></li>
-            <li><a id="approveActList" href="club/approveActList" class="ajax-link">活动审批</a></li>
-            <li><a href="#">审批活动</a></li>
         </ol>
 
     </div>
@@ -16,7 +14,7 @@
         <div class="box">
             <div class="box-header">
                 <div class="box-name">
-                    <i class="fa fa-plus-square"></i>发起活动
+                    <i class="fa fa-plus-square"></i>活动详情
                 </div>
                 <div class="box-icons">
                 </div>
@@ -79,11 +77,37 @@
                             <span class="col-sm-8" style="padding:4px 0 0;"><?php echo $act->DESC ;?></span>
                         </div>
                     </div>
+                    <div class="box-content no-padding">
+                        <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="datatable-1">
+                            <thead>
+                            <tr>
+                                <th>参与者</th>
+                                <th>状态</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!-- Start: list_row -->
+                            <?php  foreach ($participants as $k=>$row){?>
+                                <tr>
+                                    <td><?php echo $row->USER_ID;?></td>
+                                    <td><?php if($row->STATUS==1){?>已确认<?php }?><?php if($row->STATUS==0){?>已加入<?php }?></td>
+
+                                </tr>
+                            <?php }?>
+                            <!-- End: list_row -->
+                            </tbody>
+                        </table>
+                    </div>
                     <div class="clearfix"></div>
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-2">
-                            <?php if(in_array('0', explode(",", $_SESSION['user']->AUTHORITY))){?><button type="submit" class="btn btn-primary">审批通过</button><?php } ?>
-                            <a class="btn btn-default" onclick="$('#approveActList').click();">返 回</a>
+                            <?php if(in_array('0', explode(",", $_SESSION['user']->AUTHORITY))){?><button type="submit" class="btn btn-primary" name="action" value="approve">审批通过</button><?php } ?>
+                            <?php if(in_array('1', explode(",", $_SESSION['user']->AUTHORITY)) || in_array('2', explode(",", $_SESSION['user']->AUTHORITY))){?>
+                                <button type="submit" class="btn btn-primary" name="action" value="join" <?php if ($isInAct){?> disabled <?php } ?> >
+                                    <?php if ($isInAct){?> 已加入 <?php }else{ ?>参与活动 <?php } ?>
+                                </button>
+                            <?php } ?>
+<!--                            <a class="btn btn-default" onclick="window.history.back()">返 回</a>-->
                         </div>
                     </div>
                 </form>
@@ -98,12 +122,12 @@
                 return true;
             },
             success: function(data) {
-                //if(data=="true"){
-                alert("提交成功！");
-                $('#approveActList').click();
-                //}else{
-                //	alert(data);
-                //}
+                    if(data=="true"){
+                        alert("加入成功！");
+                    }else{
+                        alert("人数已满或者条件不符！");
+                    }
+                location.reload();
             }
         });
     })

@@ -567,6 +567,29 @@ class Club extends CI_Controller {
 		$this->load->view('club/act/actList',$arr);
 	}
 
+	public function myAct(){
+		if (!session_id()) session_start();
+		$this->load->model('t_act');
+		$this->load->model('t_user');
+		$acts = $this->t_act->getActList('starter_id =', $_SESSION['user']->USER_ID);
+		$participaedActs = $this->t_act->getJoinedAct();
+		$acts = array_merge($acts, $participaedActs);
+		foreach ($acts as $row){
+			$province=$this->t_user->getProvinceByCode($row->PROVINCE_CODE);
+			if(count($province)>0){
+				$row->PROVINCE_CODE=$province[0]->name;
+			}
+			$user=$this->t_user->get_user($row->STARTER_ID);
+			if(count($user)>0){
+				$row->STARTER_ID=$user[0]->NICKNAME."(".$user[0]->CODE.")";
+			}
+		}
+		$arr=array(
+			'actList'=> $acts
+		);
+		$this->load->view('club/act/myAct',$arr);
+	}
+
 	public function approveActList(){
 		$this->load->model('t_act');
 		$this->load->model('t_user');
@@ -593,17 +616,27 @@ class Club extends CI_Controller {
 		$this->load->model('t_user');
 		$actId= $this->input->get('id');
 		$act = $this->t_act->getAct($actId);
+		$isInAct = $this->t_act->isInAct($actId);
 
 		$province=$this->t_user->getProvinceByCode($act[0]->PROVINCE_CODE);
 		if(count($province)>0){
 			$act[0]->PROVINCE_CODE=$province[0]->name;
 		}
-		$user=$this->t_user->get_user($act[0]->STARTER_ID);
-		if(count($user)>0){
-			$act[0]->STARTER_ID=$user[0]->NICKNAME."(".$user[0]->CODE.")";
+		$starter=$this->t_user->get_user($act[0]->STARTER_ID);
+		if(count($starter)>0){
+			$act[0]->STARTER_ID=$starter[0]->NICKNAME."(".$starter[0]->CODE.")";
+		}
+		$participants = $this->t_act->getParticipants($actId);
+		foreach($participants as $row){
+			$user=$this->t_user->get_user($row->USER_ID);
+			if(count($user)>0){
+				$row->USER_ID=$user[0]->NICKNAME."(".$user[0]->CODE.")";
+			}
 		}
 		$arr=array(
-			'act'=>$act[0]
+			'act'=>$act[0],
+			'isInAct' => $isInAct,
+			'participants' => $participants
 		);
 		$this->load->view('club/act/approveAct',$arr);
 	}
@@ -655,9 +688,10 @@ class Club extends CI_Controller {
 	public function doApproveAct(){
 		$this->load->model('t_act');
 		$id = $this->input->post('act_id');
-		$this->t_act->approveAct($id);
-		echo "true";
+		$action = $this->input->post('action');
+		if($action == 'approve')
+			$this->t_act->approveAct($id);
+		else if ($action == 'join')
+			echo $this->t_act->joinAct($id)?"true":"false";
 	}
-	
-	
 }

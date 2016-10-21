@@ -546,6 +546,118 @@ class Club extends CI_Controller {
 		$smtp->debug = false;//是否显示发送的调试信息
 		$state = $smtp->sendmail($smtpemailto, $smtpusermail, $mailtitle, $mailcontent, $mailtype);
 	}
+
+	public function actList(){
+		$this->load->model('t_act');
+		$this->load->model('t_user');
+		$acts = $this->t_act->getActList('status !=', 0);
+		foreach ($acts as $row){
+			$province=$this->t_user->getProvinceByCode($row->PROVINCE_CODE);
+			if(count($province)>0){
+				$row->PROVINCE_CODE=$province[0]->name;
+			}
+			$user=$this->t_user->get_user($row->STARTER_ID);
+			if(count($user)>0){
+				$row->STARTER_ID=$user[0]->NICKNAME."(".$user[0]->CODE.")";
+			}
+		}
+		$arr=array(
+			'actList'=> $acts
+		);
+		$this->load->view('club/act/actList',$arr);
+	}
+
+	public function approveActList(){
+		$this->load->model('t_act');
+		$this->load->model('t_user');
+		$acts = $this->t_act->getActList('status =', 0);
+		foreach ($acts as $row){
+			$province=$this->t_user->getProvinceByCode($row->PROVINCE_CODE);
+			if(count($province)>0){
+				$row->PROVINCE_CODE=$province[0]->name;
+			}
+			$user=$this->t_user->get_user($row->STARTER_ID);
+			if(count($user)>0){
+				$row->STARTER_ID=$user[0]->NICKNAME;
+			}
+		}
+		$arr=array(
+			'actList'=>$acts
+		);
+		$this->load->view('club/act/approveActList',$arr);
+	}
+
+	public function approveAct(){
+		if (!session_id()) session_start();
+		$this->load->model('t_act');
+		$this->load->model('t_user');
+		$actId= $this->input->get('id');
+		$act = $this->t_act->getAct($actId);
+
+		$province=$this->t_user->getProvinceByCode($act[0]->PROVINCE_CODE);
+		if(count($province)>0){
+			$act[0]->PROVINCE_CODE=$province[0]->name;
+		}
+		$user=$this->t_user->get_user($act[0]->STARTER_ID);
+		if(count($user)>0){
+			$act[0]->STARTER_ID=$user[0]->NICKNAME."(".$user[0]->CODE.")";
+		}
+		$arr=array(
+			'act'=>$act[0]
+		);
+		$this->load->view('club/act/approveAct',$arr);
+	}
+
+	public function actInsert(){
+		$this->load->model('t_act');
+		$id = $this->input->post('id');
+		$title = $this->input->post('title');
+		$grade = $this->input->post('grade');
+		$location = $this->input->post('location');
+		$start_on = $this->input->post('start_on');
+		$desc = $this->input->post('desc');
+		$credit = $this->input->post('credit');
+		$max_part = $this->input->post('max_part');
+		if($id!=null && $id!=""){
+			try {
+				$this->t_act->updateAct($id,$title,$grade,$location,$start_on,$desc,$credit,$max_part);
+				echo "编辑成功";
+			} catch (Exception $e) {
+				echo "编辑异常";
+			}
+		}else{
+			try {
+				$this->t_act->insertAct($title,$grade,$location,$start_on,$desc,$credit,$max_part);
+				echo "添加成功";
+			} catch (Exception $e) {
+				echo "添加异常";
+			}
+		}
+	}
+	public function actAdd(){
+		$this->load->model('t_user');
+		$arr=array(
+			'provinces'=>$this->t_user->get_province(true)
+		);
+		$this->load->view('club/act/actAdd', $arr);
+	}
+
+//	public function updateAct(){
+//		$this->load->model('t_act');
+//		$id = $this->input->get('id');
+//		$act=$this->t_act->getAct($id);
+//		$arr=array(
+//			'act'=>$act[0]
+//		);
+//		$this->load->view('club/act/actUpdate',$arr);
+//	}
+
+	public function doApproveAct(){
+		$this->load->model('t_act');
+		$id = $this->input->post('act_id');
+		$this->t_act->approveAct($id);
+		echo "true";
+	}
 	
 	
 }

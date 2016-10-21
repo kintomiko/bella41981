@@ -1,4 +1,4 @@
-DELETE FROM t_menu;
+﻿DELETE FROM t_menu;
 
 INSERT INTO `t_menu` (`ID`, `PARENT`, `NAME`, `URL`, `ORDER`, `ICON`)
 VALUES
@@ -18,15 +18,27 @@ VALUES
 	(14, 13, '全部活动', 'club/actList', 1, NULL),
 	(15, 13, '活动审批', 'club/approveActList', 1, NULL);
 
-
+DELETE FROM t_role_menu;
 INSERT INTO `t_role_menu` (`ID`, `ROLE_CODE`, `MENU_ID`)
 VALUES
+	(1, 0, 4),
+	(2, 1, 1),
+	(3, 1, 2),
+	(4, 1, 3),
+	(5, 2, 5),
+	(6, 0, 6),
+	(7, 0, 7),
+	(8, 3, 10),
+	(9, 2, 9),
+	(10, 0, 11),
+	(11, 0, 12),
 	(12, 2, 14),
 	(13, 2, 13),
 	(14, 1, 13),
 	(15, 1, 14),
 	(16, 0, 13),
 	(17, 0, 15);
+
 
 CREATE TABLE IF NOT EXISTS `t_act` (
 	`ID` bigint(20) NOT NULL AUTO_INCREMENT,

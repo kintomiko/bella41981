@@ -4,7 +4,7 @@
 
 
 ## Dev environment:
-http://bella-bella981.44fs.preview.openshiftapps.com/
+https://bella41981.herokuapp.com
 
 Users:
 sadmin/123123

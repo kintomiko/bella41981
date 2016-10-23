@@ -32,6 +32,11 @@ class T_act extends MY_Model{
         return $query->result()[0];
     }
 
+    public function getActPart($actId, $userId){
+        $query = $this->db->get_where('t_act_part',array('ACT_ID' => $actId, 'USER_ID' => $userId));
+        return $query->result();
+    }
+
     public function insertAct($title,$grade,$location,$start_on,$end_on,$reg_start_on,$reg_end_on,$desc,$credit,$max_part,$min_part){
         if (!session_id()) session_start();
         $this->load->model('t_system');
@@ -76,19 +81,17 @@ class T_act extends MY_Model{
         $this->t_system->operateAdd($_SESSION['user']->USER_ID,"拒绝活动",$act->TITLE);
     }
 
-    public function isInAct($id){
-        return ($this->isStarter($id) || $this->isParticipant($id));
+    public function isInAct($actId, $userId){
+        return ($this->isStarter($actId, $userId) || $this->isParticipant($actId, $userId));
     }
 
-    public function isStarter($id){
-        if (!session_id()) session_start();
-        $query = $this->db->get_where('t_act',array('ID' => $id, 'STARTER_ID' => $_SESSION['user']->USER_ID));
+    private function isStarter($id, $userId){
+        $query = $this->db->get_where('t_act',array('ID' => $id, 'STARTER_ID' => $userId));
         return count($query->result())>0? true:false;
     }
 
-    public function isParticipant($id){
-        if (!session_id()) session_start();
-        $query = $this->db->get_where('t_act_part',array('ACT_ID' => $id, 'USER_ID' => $_SESSION['user']->USER_ID));
+    private function isParticipant($id, $userId){
+        $query = $this->db->get_where('t_act_part',array('ACT_ID' => $id, 'USER_ID' => $userId));
         return count($query->result())>0? true:false;
     }
 
@@ -129,6 +132,65 @@ class T_act extends MY_Model{
     public function getParticipants($id){
         $query = $this->db->get_where('t_act_part',array('ACT_ID' => $id));
         return $query->result();
+    }
+
+    private function getConfirm($actId, $fromUserId, $toUserId){
+        $this->db->select('t_act_confirm.*');
+        $this->db->from('t_act_confirm');
+        $this->db->where('to_id',$toUserId);
+        $this->db->where('from_id',$fromUserId);
+        $this->db->where('act_id',$actId);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    private function countGotConfirm($actId, $toUserId){
+        $this->db->distinct(true);
+        $this->db->select('t_act_confirm.*');
+        $this->db->from('t_act_confirm');
+        $this->db->where('to_id',$toUserId);
+        $this->db->where('act_id',$actId);
+        $query = $this->db->get();
+        return count($query->result());
+    }
+
+    private function countGivenConfirm($actId, $fromUserId){
+        $this->db->distinct(true);
+        $this->db->select('t_act_confirm.*');
+        $this->db->from('t_act_confirm');
+        $this->db->where('from_id',$fromUserId);
+        $this->db->where('act_id',$actId);
+        $query = $this->db->get();
+        return count($query->result());
+    }
+
+    public function insertConfirm($actId, $fromUserId, $toUserId, $comment){
+        if(!$this->isInAct($actId, $toUserId) ||
+            !$this->isInAct($actId, $fromUserId) ||
+            $this->countGivenConfirm($actId, $fromUserId) >=5 ||
+            $fromUserId == $toUserId)
+            return false;
+        $this->db->set('to_id',$toUserId);
+        $this->db->set('from_id',$fromUserId);
+        $this->db->set('act_id',$actId);
+        $this->db->set('comment',$comment);
+        $this->db->insert('t_act_confirm');
+        return true;
+    }
+
+    public function checkAndGrantCredit($actId, $userId){
+        $this->load->model('t_system');
+        $this->load->model('t_credit');
+        $act = $this->getAct($actId);
+        $toUserPart = $this->getActPart($actId, $userId);
+        if(count($toUserPart)>0){
+            $toUserPart = $toUserPart[0];
+        }else{
+            return false;
+        }
+        if($this->countGotConfirm($actId, $userId)>=3 && $toUserPart->STATUS == 0){
+            $this->t_credit->insertCredit($userId, $act->CREDIT);
+        }
     }
 
 }

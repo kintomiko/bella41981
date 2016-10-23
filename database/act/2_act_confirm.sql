@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS t_act_confirm;
+CREATE TABLE `t_act_confirm` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `ACT_ID` bigint(20) NOT NULL,
+  `FROM_ID` bigint(20) NOT NULL,
+  `TO_ID` bigint(20) NOT NULL,
+  `COMMENT` varchar(1024) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

@@ -5,7 +5,7 @@
         </a>
         <ol class="breadcrumb pull-left">
             <li><a href="club/dashboard" class="ajax-link">首页</a></li>
-            <li><a id="myAct" href="club/myAct" class="ajax-link">我的活动</a></li>
+            <li><a id="myActList" href="club/myActList" class="ajax-link">我的活动</a></li>
         </ol>
     </div>
 </div>

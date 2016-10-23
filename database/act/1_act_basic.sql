@@ -17,7 +17,7 @@ VALUES
   (13, NULL, '活动管理', '', 1, 'fa-users'),
   (14, 13, '全部活动', 'club/actList', 1, NULL),
   (15, 13, '活动审批', 'club/approveActList', 1, NULL),
-  (16, 13, '我的活动', 'club/myAct', 2, NULL);
+  (16, 13, '我的活动', 'club/myActList', 2, NULL);
 
 DELETE FROM t_role_menu;
 INSERT INTO `t_role_menu` (`ID`, `ROLE_CODE`, `MENU_ID`)

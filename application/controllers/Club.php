@@ -567,7 +567,7 @@ class Club extends CI_Controller {
 		$this->load->view('club/act/actList',$arr);
 	}
 
-	public function myAct(){
+	public function myActList(){
 		if (!session_id()) session_start();
 		$this->load->model('t_act');
 		$this->load->model('t_user');
@@ -587,7 +587,7 @@ class Club extends CI_Controller {
 		$arr=array(
 			'actList'=> $acts
 		);
-		$this->load->view('club/act/myAct',$arr);
+		$this->load->view('club/act/myActList',$arr);
 	}
 
 	public function approveActList(){
@@ -616,7 +616,7 @@ class Club extends CI_Controller {
 		$this->load->model('t_user');
 		$actId= $this->input->get('id');
 		$act = $this->t_act->getAct($actId);
-		$isInAct = $this->t_act->isInAct($actId);
+		$isInAct = $this->t_act->isInAct($actId, $_SESSION['user']->USER_ID);
 
 		$province=$this->t_user->getProvinceByCode($act->PROVINCE_CODE);
 		if(count($province)>0){

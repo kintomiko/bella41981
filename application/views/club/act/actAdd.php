@@ -37,19 +37,25 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">参与人数</label>
+                        <label class="col-sm-2 control-label">人数上限</label>
                         <div class="col-sm-3">
                             <input type="text" class="form-control" name="max_part" style="width:85px;"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">等级要求</label>
+                        <label class="col-sm-2 control-label">人数下限</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" name="min_part" style="width:85px;"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">参与会员等级限制</label>
                         <div class="col-sm-3">
                             <input type="text" class="form-control" name="grade" style="width:85px;"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">区域要求</label>
+                        <label class="col-sm-2 control-label">所属地区</label>
                         <select class="form-control" id="province" name="province_code" style="border: solid 1px rgba(162, 159, 159, 0.33);-webkit-appearance: initial;">
                             <option value="" selected>区域要求</option>
                             <?php  foreach ($provinces as $row){?>
@@ -60,7 +66,28 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">开始时间</label>
                         <div class="col-sm-3">
-                            <input type="text" id="input_date" name="start_on" class="form-control" readonly>
+                            <input type="text" id="start_on" name="start_on" class="form-control b_input_date" readonly>
+                            <span class="fa fa-calendar txt-danger form-control-feedback"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">结束时间</label>
+                        <div class="col-sm-3">
+                            <input type="text" id="end_on" name="end_on" class="form-control b_input_date" readonly>
+                            <span class="fa fa-calendar txt-danger form-control-feedback"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">报名开始时间</label>
+                        <div class="col-sm-3">
+                            <input type="text" id="reg_start_on" name="reg_start_on" class="form-control b_input_date" readonly>
+                            <span class="fa fa-calendar txt-danger form-control-feedback"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">报名结束时间</label>
+                        <div class="col-sm-3">
+                            <input type="text" id="reg_end_on" name="reg_end_on" class="form-control b_input_date" readonly>
                             <span class="fa fa-calendar txt-danger form-control-feedback"></span>
                         </div>
                     </div>
@@ -90,12 +117,12 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#input_date').datepicker({
+        $('.b_input_date').datepicker({
             changeMonth: true,
             changeYear: true,
             defaultDate :""
         });
-        $( "#input_date" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+        $( ".b_input_date" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
         $('.form-control').tooltip();
         WinMove();
         var regnum = new RegExp("^[0-9]*$");

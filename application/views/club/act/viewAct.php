@@ -36,15 +36,32 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-sm-2 control-label">状态</label>
+                        <div class="col-sm-3">
+                            <span class="col-sm-8" style="padding:4px 0 0;">
+                                <?php if($act->STATUS==400){?>已拒绝<?php }?>
+                                <?php if($act->STATUS==300){?>已结束<?php }?>
+                                <?php if($act->STATUS==200){?>组织中<?php }?>
+                                <?php if($act->STATUS==100){?>待审批<?php }?>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-sm-2 control-label">参与者积分奖励</label>
                         <div class="col-sm-3">
                             <span class="col-sm-8" style="padding:4px 0 0;"><?php echo $act->CREDIT ;?></span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">参与人数</label>
+                        <label class="col-sm-2 control-label">人数上限</label>
                         <div class="col-sm-3">
-                            <span class="col-sm-8" style="padding:4px 0 0;"><?php echo $act->CUR_PART." / ".$act->MAX_PART ;?></span>
+                            <span class="col-sm-8" style="padding:4px 0 0;"><?php echo $act->MAX_PART ;?></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">人数下限</label>
+                        <div class="col-sm-3">
+                            <span class="col-sm-8" style="padding:4px 0 0;"><?php echo $act->MIN_PART ;?></span>
                         </div>
                     </div>
                     <div class="form-group">
@@ -63,6 +80,24 @@
                         <label class="col-sm-2 control-label">开始时间</label>
                         <div class="col-sm-3">
                             <span class="col-sm-8" style="padding:4px 0 0;"><?php echo $act->START_ON ;?></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">结束时间</label>
+                        <div class="col-sm-3">
+                            <span class="col-sm-8" style="padding:4px 0 0;"><?php echo $act->END_ON ;?></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">报名开始时间</label>
+                        <div class="col-sm-3">
+                            <span class="col-sm-8" style="padding:4px 0 0;"><?php echo $act->REG_START_ON ;?></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">报名结束时间</label>
+                        <div class="col-sm-3">
+                            <span class="col-sm-8" style="padding:4px 0 0;"><?php echo $act->REG_END_ON ;?></span>
                         </div>
                     </div>
                     <div class="form-group">
@@ -101,12 +136,15 @@
                     <div class="clearfix"></div>
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-2">
-                            <?php if(in_array('0', explode(",", $_SESSION['user']->AUTHORITY))){?><button type="submit" class="btn btn-primary" name="action" value="approve">审批通过</button><?php } ?>
-                            <?php if(in_array('1', explode(",", $_SESSION['user']->AUTHORITY)) || in_array('2', explode(",", $_SESSION['user']->AUTHORITY))){?>
-                                <button type="submit" class="btn btn-primary" name="action" value="join" <?php if ($isInAct){?> disabled <?php } ?> >
-                                    <?php if ($isInAct){?> 已加入 <?php }else{ ?>参与活动 <?php } ?>
-                                </button>
+<!--                            for super admin-->
+                            <?php if(in_array('0', explode(",", $_SESSION['user']->AUTHORITY))){?>
+                                <button type="submit" class="btn btn-primary" name="action" value="approve">审批通过</button>
+                                <button type="submit" class="btn btn-primary" name="action" value="reject">拒绝活动</button>
                             <?php } ?>
+<!--                            for all-->
+                            <button type="submit" class="btn btn-primary" name="action" value="join" <?php if ($isInAct){?> disabled <?php } ?> >
+                                <?php if ($isInAct){?> 已加入 <?php }else{ ?>参与活动 <?php } ?>
+                            </button>
 <!--                            <a class="btn btn-default" onclick="window.history.back()">返 回</a>-->
                         </div>
                     </div>
@@ -122,10 +160,11 @@
                 return true;
             },
             success: function(data) {
+                debugger;
                     if(data=="true"){
-                        alert("加入成功！");
+                        alert("成功！");
                     }else{
-                        alert("人数已满或者条件不符！");
+                        alert("失败！");
                     }
                 location.reload();
             }

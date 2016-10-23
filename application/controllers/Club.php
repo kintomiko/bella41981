@@ -550,7 +550,7 @@ class Club extends CI_Controller {
 	public function actList(){
 		$this->load->model('t_act');
 		$this->load->model('t_user');
-		$acts = $this->t_act->getActList('status !=', 0);
+		$acts = $this->t_act->getActList('status != 100 and status != 400');
 		foreach ($acts as $row){
 			$province=$this->t_user->getProvinceByCode($row->PROVINCE_CODE);
 			if(count($province)>0){
@@ -571,7 +571,7 @@ class Club extends CI_Controller {
 		if (!session_id()) session_start();
 		$this->load->model('t_act');
 		$this->load->model('t_user');
-		$acts = $this->t_act->getActList('starter_id =', $_SESSION['user']->USER_ID);
+		$acts = $this->t_act->getActList('starter_id = '.$_SESSION['user']->USER_ID);
 		$participaedActs = $this->t_act->getJoinedAct();
 		$acts = array_merge($acts, $participaedActs);
 		foreach ($acts as $row){
@@ -593,7 +593,7 @@ class Club extends CI_Controller {
 	public function approveActList(){
 		$this->load->model('t_act');
 		$this->load->model('t_user');
-		$acts = $this->t_act->getActList('status =', 0);
+		$acts = $this->t_act->getActList('status = 100 or status = 400');
 		foreach ($acts as $row){
 			$province=$this->t_user->getProvinceByCode($row->PROVINCE_CODE);
 			if(count($province)>0){
@@ -610,7 +610,7 @@ class Club extends CI_Controller {
 		$this->load->view('club/act/approveActList',$arr);
 	}
 
-	public function approveAct(){
+	public function viewAct(){
 		if (!session_id()) session_start();
 		$this->load->model('t_act');
 		$this->load->model('t_user');
@@ -618,13 +618,13 @@ class Club extends CI_Controller {
 		$act = $this->t_act->getAct($actId);
 		$isInAct = $this->t_act->isInAct($actId);
 
-		$province=$this->t_user->getProvinceByCode($act[0]->PROVINCE_CODE);
+		$province=$this->t_user->getProvinceByCode($act->PROVINCE_CODE);
 		if(count($province)>0){
-			$act[0]->PROVINCE_CODE=$province[0]->name;
+			$act->PROVINCE_CODE=$province[0]->name;
 		}
-		$starter=$this->t_user->get_user($act[0]->STARTER_ID);
+		$starter=$this->t_user->get_user($act->STARTER_ID);
 		if(count($starter)>0){
-			$act[0]->STARTER_ID=$starter[0]->NICKNAME."(".$starter[0]->CODE.")";
+			$act->STARTER_ID=$starter[0]->NICKNAME."(".$starter[0]->CODE.")";
 		}
 		$participants = $this->t_act->getParticipants($actId);
 		foreach($participants as $row){
@@ -634,39 +634,13 @@ class Club extends CI_Controller {
 			}
 		}
 		$arr=array(
-			'act'=>$act[0],
+			'act'=>$act,
 			'isInAct' => $isInAct,
 			'participants' => $participants
 		);
-		$this->load->view('club/act/approveAct',$arr);
+		$this->load->view('club/act/viewAct',$arr);
 	}
 
-	public function actInsert(){
-		$this->load->model('t_act');
-		$id = $this->input->post('id');
-		$title = $this->input->post('title');
-		$grade = $this->input->post('grade');
-		$location = $this->input->post('location');
-		$start_on = $this->input->post('start_on');
-		$desc = $this->input->post('desc');
-		$credit = $this->input->post('credit');
-		$max_part = $this->input->post('max_part');
-		if($id!=null && $id!=""){
-			try {
-				$this->t_act->updateAct($id,$title,$grade,$location,$start_on,$desc,$credit,$max_part);
-				echo "编辑成功";
-			} catch (Exception $e) {
-				echo "编辑异常";
-			}
-		}else{
-			try {
-				$this->t_act->insertAct($title,$grade,$location,$start_on,$desc,$credit,$max_part);
-				echo "添加成功";
-			} catch (Exception $e) {
-				echo "添加异常";
-			}
-		}
-	}
 	public function actAdd(){
 		$this->load->model('t_user');
 		$arr=array(
@@ -675,23 +649,39 @@ class Club extends CI_Controller {
 		$this->load->view('club/act/actAdd', $arr);
 	}
 
-//	public function updateAct(){
-//		$this->load->model('t_act');
-//		$id = $this->input->get('id');
-//		$act=$this->t_act->getAct($id);
-//		$arr=array(
-//			'act'=>$act[0]
-//		);
-//		$this->load->view('club/act/actUpdate',$arr);
-//	}
+	public function actInsert(){
+		$this->load->model('t_act');
+		$title = $this->input->post('title');
+		$grade = $this->input->post('grade');
+		$location = $this->input->post('location');
+		$start_on = $this->input->post('start_on');
+		$end_on = $this->input->post('end_on');
+		$reg_start_on = $this->input->post('reg_start_on');
+		$reg_end_on = $this->input->post('reg_end_on');
+		$desc = $this->input->post('desc');
+		$credit = $this->input->post('credit');
+		$max_part = $this->input->post('max_part');
+		$min_part = $this->input->post('min_part');
+		try {
+			$this->t_act->insertAct($title,$grade,$location,$start_on,$end_on,$reg_start_on,$reg_end_on,$desc,$credit,$max_part,$min_part);
+			echo "添加成功";
+		} catch (Exception $e) {
+			echo "添加异常";
+		}
+	}
 
 	public function doApproveAct(){
 		$this->load->model('t_act');
 		$id = $this->input->post('act_id');
 		$action = $this->input->post('action');
-		if($action == 'approve')
+		if($action == 'approve') {
 			$this->t_act->approveAct($id);
-		else if ($action == 'join')
+			echo "true";
+		}else if ($action == 'join')
 			echo $this->t_act->joinAct($id)?"true":"false";
+		else if ($action == 'reject'){
+			$this->t_act->rejectAct($id);
+			echo "true";
+		}
 	}
 }

@@ -26,9 +26,10 @@
                         <th>发起者</th>
                         <th>状态</th>
                         <th>等级要求</th>
-                        <th>区域要求</th>
+                        <th>所在区域</th>
                         <th>积分奖励</th>
-                        <th>开始时间</th>
+                        <th>活动时间</th>
+                        <th>报名时间</th>
                         <th>参与人数</th>
                         <th style="width:40px;">操作</th>
                     </tr>
@@ -39,13 +40,19 @@
                         <tr>
                             <td><?php echo $row->TITLE;?></td>
                             <td><?php echo $row->STARTER_ID;?></td>
-                            <td><?php if($row->STATUS==2){?>已结束<?php }?><?php if($row->STATUS==1){?>组织中<?php }?><?php if($row->STATUS==0){?>待审批<?php }?></td>
+                            <td>
+                                <?php if($row->STATUS==400){?>已拒绝<?php }?>
+                                <?php if($row->STATUS==300){?>已结束<?php }?>
+                                <?php if($row->STATUS==200){?>组织中<?php }?>
+                                <?php if($row->STATUS==100){?>待审批<?php }?>
+                            </td>
                             <td><?php echo $row->GRADE;?></td>
                             <td><?php echo $row->PROVINCE_CODE;?></td>
                             <td><?php echo $row->CREDIT;?></td>
-                            <td><?php echo $row->START_ON;?></td>
-                            <td><?php echo $row->CUR_PART." / ".$row->MAX_PART;?></td>
-                            <td><a class="ajax-link" href="club/approveAct?id=<?php echo $row->ID;?>" title="审批"><i class="fa fa-edit"></i></a>
+                            <td><?php echo $row->START_ON." ~ ".$row->END_ON;?></td>
+                            <td><?php echo $row->REG_START_ON." ~ ".$row->REG_END_ON;?></td>
+                            <td><?php echo $row->CUR_PART." / ".$row->MIN_PART." / ".$row->MAX_PART;?></td>
+                            <td><a class="ajax-link" href="club/viewAct?id=<?php echo $row->ID;?>" title="审批"><i class="fa fa-edit"></i></a>
                             </td>
                         </tr>
                     <?php }?>

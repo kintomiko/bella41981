@@ -7,25 +7,32 @@
  */
 class T_act extends MY_Model{
 
+//    ACT status:
+//    100 pending
+//    200 accepted
+//    201 start confirming
+//    300 closed
+//    400 rejected
+
 	public function __construct(){
         parent::__construct();
         $this->load->library('session');
     }
 
-    public function getActList($filter, $value){
+    public function getActList($filter){
         $this->db->select('t_act.*');
         $this->db->from('t_act');
-        $this->db->where($filter, $value);
+        $this->db->where($filter);
         $query = $this->db->get();
         return $query->result();
     }
 
     public function getAct($id){
         $query = $this->db->get_where('t_act',array('ID' => $id));
-        return $query->result();
+        return $query->result()[0];
     }
 
-    public function insertAct($title,$grade,$location,$start_on,$desc,$credit,$max_part){
+    public function insertAct($title,$grade,$location,$start_on,$end_on,$reg_start_on,$reg_end_on,$desc,$credit,$max_part,$min_part){
         if (!session_id()) session_start();
         $this->load->model('t_system');
         date_default_timezone_set("PRC");
@@ -34,38 +41,39 @@ class T_act extends MY_Model{
         $this->db->set('starter_id',$_SESSION['user']->USER_ID);
         $this->db->set('province_code',$_SESSION['user']->PROVINCE_CODE);
         $this->db->set('location',$location);
+        $this->db->set('reg_start_on',$reg_start_on);
+        $this->db->set('reg_end_on',$reg_end_on);
         $this->db->set('start_on',$start_on);
+        $this->db->set('end_on',$end_on);
         $this->db->set('desc',$desc);
-        $this->db->set('status',0);
+        $this->db->set('status',100);
         $this->db->set('max_part',$max_part);
+        $this->db->set('min_part',$min_part);
         $this->db->set('credit',$credit);
         $this->db->insert('t_act');
         $this->t_system->operateAdd($_SESSION['user']->USER_ID,"添加活动",$title);
     }
 
-    public function updateAct($id,$title,$grade,$location,$start_on,$desc,$credit,$max_part){
-        if (!session_id()) session_start();
-        $this->load->model('t_system');
-        $this->db->set('title',$title);
-        $this->db->set('grade',$grade);
-        $this->db->set('location',$location);
-        $this->db->set('start_on',$start_on);
-        $this->db->set('desc',$desc);
-        $this->db->set('max_part',$max_part);
-        $this->db->set('credit',$credit);
-        $this->db->where('id',$id);
-        $this->db->update('t_act');
-        $this->t_system->operateAdd($_SESSION['user']->USER_ID,"修改活动",$title);
-    }
-
     public function approveAct($id){
         if (!session_id()) session_start();
-        $this->load->model('t_system');
-        $act = $this->getAct($id);
-        $this->db->set('status',1);
+        $this->db->set('status',200);
         $this->db->where('id',$id);
         $this->db->update('t_act');
-        $this->t_system->operateAdd($_SESSION['user']->USER_ID,"审批通过活动",$act[0]->TITLE);
+
+        $this->load->model('t_system');
+        $act = $this->getAct($id);
+        $this->t_system->operateAdd($_SESSION['user']->USER_ID,"审批通过活动",$act->TITLE);
+    }
+
+    public function rejectAct($id){
+        if (!session_id()) session_start();
+        $this->db->set('status',400);
+        $this->db->where('id',$id);
+        $this->db->update('t_act');
+
+        $this->load->model('t_system');
+        $act = $this->getAct($id);
+        $this->t_system->operateAdd($_SESSION['user']->USER_ID,"拒绝活动",$act->TITLE);
     }
 
     public function isInAct($id){
@@ -87,15 +95,15 @@ class T_act extends MY_Model{
     public function joinAct($id){
         if (!session_id()) session_start();
         $this->load->model('t_system');
-
         $act = $this->getAct($id);
-        if($act[0]->MAX_PART ==  $act[0]->CUR_PART)
+        date_default_timezone_set("PRC");
+        if($act->MAX_PART ==  $act->CUR_PART)
             return false;
-        if($act[0]->GRADE > $_SESSION['user']->GRADE)
+        if($act->GRADE > $_SESSION['user']->GRADE)
             return false;
-        if($act[0]->PROVINCE_CODE != $_SESSION['user']->PROVINCE_CODE)
+        if($act->REG_START_ON > date('Y-m-d H:i:s') || $act->REG_END_ON < date('Y-m-d H:i:s') )
             return false;
-        $this->db->set('CUR_PART',$act[0]->CUR_PART+1);
+        $this->db->set('CUR_PART',$act->CUR_PART+1);
         $this->db->where('id',$id);
         $this->db->update('t_act');
 
@@ -104,7 +112,7 @@ class T_act extends MY_Model{
         $this->db->set('status',0);
         $this->db->insert('t_act_part');
 
-        $this->t_system->operateAdd($_SESSION['user']->USER_ID,"加入活动",$act[0]->TITLE);
+        $this->t_system->operateAdd($_SESSION['user']->USER_ID,"加入活动",$act->TITLE);
         return true;
     }
 

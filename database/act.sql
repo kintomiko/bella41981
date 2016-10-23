@@ -40,10 +40,12 @@ VALUES
   (16, 0, 13),
   (17, 0, 15),
   (18, 2, 16),
-  (19, 1, 16);
+  (19, 1, 16),
+  (20, 0, 16),
+  (21, 0, 14);
 
-
-CREATE TABLE IF NOT EXISTS `t_act` (
+DROP TABLE IF EXISTS t_act;
+CREATE TABLE `t_act` (
 	`ID` bigint(20) NOT NULL AUTO_INCREMENT,
 	`STARTER_ID` bigint(20) NOT NULL,
 	`PROVINCE_CODE` varchar(255) DEFAULT NULL,
@@ -63,7 +65,8 @@ CREATE TABLE IF NOT EXISTS `t_act` (
 	PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-CREATE TABLE IF NOT EXISTS `t_act_part` (
+DROP TABLE IF EXISTS t_act_part;
+CREATE TABLE `t_act_part` (
 	`ID` bigint(20) NOT NULL AUTO_INCREMENT,
 	`ACT_ID` bigint(20) NOT NULL,
 	`USER_ID` bigint(20) NOT NULL,
@@ -71,7 +74,8 @@ CREATE TABLE IF NOT EXISTS `t_act_part` (
 	PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-CREATE TABLE IF NOT EXISTS `t_act_img` (
+DROP TABLE IF EXISTS t_act_img;
+CREATE TABLE `t_act_img` (
   `ID` bigint(20) NOT NULL AUTO_INCREMENT,
   `ACT_ID` bigint(20) NOT NULL,
   `URL` varchar(255) NOT NULL,

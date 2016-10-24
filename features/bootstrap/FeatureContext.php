@@ -79,6 +79,14 @@ class FeatureContext extends MinkContext
     }
 
     /**
+     *
+     * @Given /^(?:|I )wait for "(?P<timespan>[^"]+)" secs$/
+     */
+    public function iWait($timespan){
+        $this->getSession()->wait(((int)$timespan)*1000);
+    }
+
+    /**
      * This function prevents Behat form failing a tests if the HTML is not loaded yet.
      * Behat with Selenium often executes tests faster thant Selenium is able to retreive
      * the HTML causing false negatives.

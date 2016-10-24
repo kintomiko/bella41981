@@ -1,5 +1,5 @@
 {
-    "require-dev": {
+    "require": {
         "behat/behat": "^3.2",
         "phpunit/phpunit": "^4.8",
         "behat/mink-extension": "^2.2",

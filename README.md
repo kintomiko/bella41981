@@ -17,6 +17,7 @@ user/123123
 ### Setup Behat and Mink
 
 curl -sS https://getcomposer.org/installer | php
+
 php composer.phar update
 
 ### Running

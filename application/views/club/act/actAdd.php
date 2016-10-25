@@ -66,28 +66,28 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">开始时间</label>
                         <div class="col-sm-3">
-                            <input type="text" id="start_on" name="start_on" class="form-control b_input_date" readonly>
+                            <input type="text" id="start_on" name="start_on" class="form-control b_input_date">
                             <span class="fa fa-calendar txt-danger form-control-feedback"></span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">结束时间</label>
                         <div class="col-sm-3">
-                            <input type="text" id="end_on" name="end_on" class="form-control b_input_date" readonly>
+                            <input type="text" id="end_on" name="end_on" class="form-control b_input_date">
                             <span class="fa fa-calendar txt-danger form-control-feedback"></span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">报名开始时间</label>
                         <div class="col-sm-3">
-                            <input type="text" id="reg_start_on" name="reg_start_on" class="form-control b_input_date" readonly>
+                            <input type="text" id="reg_start_on" name="reg_start_on" class="form-control b_input_date">
                             <span class="fa fa-calendar txt-danger form-control-feedback"></span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">报名结束时间</label>
                         <div class="col-sm-3">
-                            <input type="text" id="reg_end_on" name="reg_end_on" class="form-control b_input_date" readonly>
+                            <input type="text" id="reg_end_on" name="reg_end_on" class="form-control b_input_date">
                             <span class="fa fa-calendar txt-danger form-control-feedback"></span>
                         </div>
                     </div>

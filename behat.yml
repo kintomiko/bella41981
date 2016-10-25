@@ -4,4 +4,10 @@ default:
         Behat\MinkExtension:
             base_url: http://localhost:8000
             browser_name: chrome
-            selenium2: ~
+            sessions:
+                sadmin:
+                    selenium2: ~
+                admin:
+                    selenium2: ~
+                user:
+                    selenium2: ~

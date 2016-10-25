@@ -1,7 +1,7 @@
 <?php
 
 use Behat\MinkExtension\Context\MinkContext;
-
+use Behat\Behat\Hook\Scope\AfterStepScope;
 /**
  * Defines application features from the specific context.
  */
@@ -16,102 +16,21 @@ class FeatureContext extends MinkContext
      */
     public function iLoginClub($username, $password){
         $this->visit("/club/login");
+        $this->waitAllAjaxEventComplete();
         $this->fillField("username", $username);
         $this->fillField("password", $password);
         $this->pressButton("登录");
-        $this->getSession()->wait(1000);
+        $this->waitAllAjaxEventComplete();
     }
 
-    /**
-     * @Given /^I wait to see "(?P<text>(?:[^"]|\\")*)"$/
-     *
-     * @param string $text
-     *
-     * @return bool
-     */
-    public function iWaitToSee($text)
+    /** @AfterStep */
+    public function afterStep(AfterStepScope $scope)
     {
-        $this->waitUntilPageLoaded();
-
-        return $this->spin(
-            function ($context) use ($text) {
-                return parent::assertPageContainsText($text);
-            }
-        );
+        $this->waitAllAjaxEventComplete();
     }
 
-    /**
-     * @Given /^I keep following "(?P<page>(?:[^"]|\\")*)"$/
-     *
-     * @param string $text
-     *
-     * @return bool
-     */
-    public function iKeepFollowing($link)
-    {
-        $this->waitUntilPageLoaded();
-
-        return $this->spin(
-            function ($context) use ($link) {
-                return parent::clickLink($link);
-            }
-        );
-    }
-
-    /**
-     * This function prevents Behat form failing a tests if the HTML is not loaded yet.
-     * Behat with Selenium often executes tests faster thant Selenium is able to retreive
-     * the HTML causing false negatives.
-     *
-     * Use this for all test cases that depend on a presence of some elements on the
-     * website.
-     *
-     * Pass an anonymous function containing your normal test as an argument.
-     * The function needs to return a boolean.
-     *
-     * @see http://docs.behat.org/cookbook/using_spin_functions.html
-     *
-     * @param \Closure $closure
-     * @param int      $tries
-     *
-     * @return bool
-     *
-     * @throws \Exception|UnsupportedTestException
-     * @throws \Exception
-     */
-    public function spin($closure, $tries = 30)
-    {
-        for ($i = 0; $i < $tries; $i++) {
-            try {
-                return $closure($this);
-            } catch (\Exception $e) {
-                // do nothing to continue the loop
-            }
-
-            usleep(300000);
-        }
-
-        $backtrace = debug_backtrace();
-        throw new \Exception(
-            "Timeout thrown by " . $backtrace[1]['class'] . "::" . $backtrace[1]['function'] . "()\n" .
-            "With the following arguments: " . print_r($backtrace[1]['args'], true)
-        );
-    }
-
-    /**
-     * This methods makes Selenium2 wait until the body element is present.
-     * This supposes that the html is loaded (even if it's not 100% reliable).
-     *
-     * @return bool
-     */
-    protected function waitUntilPageLoaded()
-    {
-        $this->spin(
-            function ($context) {
-                $context->assertSession()->elementExists('xpath', '//body');
-                return true;
-            }
-        );
+    protected function waitAllAjaxEventComplete(){
+        $this->getSession()->wait(60000, '(0 === jQuery.active)');
     }
 
     /**
@@ -125,5 +44,7 @@ class FeatureContext extends MinkContext
     {
         date_default_timezone_set("PRC");
     }
+
+    use APopupDictionary;
 
 }

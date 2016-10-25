@@ -64,11 +64,11 @@ $active_record = TRUE;
 
 
 //local
-$db['default']['hostname'] = '127.0.0.1';
-$db['default']['username'] = 'dev';
-$db['default']['password'] = '123123';
-$db['default']['port'] = '3306';
-$db['default']['database'] = 'app_90zone';
+//$db['default']['hostname'] = '127.0.0.1';
+//$db['default']['username'] = 'dev';
+//$db['default']['password'] = '123123';
+//$db['default']['port'] = '3306';
+//$db['default']['database'] = 'app_90zone';
 
 //sae
 // $db['default']['hostname'] = 'w.rdc.sae.sina.com.cn';
@@ -85,11 +85,11 @@ $db['default']['database'] = 'app_90zone';
 //$db['default']['database'] = 'app_90zone';
 
 //heroku
-//$db['default']['hostname'] = 'us-cdbr-iron-east-04.cleardb.net';
-//$db['default']['username'] = 'b6f9873480e1fc';
-//$db['default']['password'] = '45cb5f51';
-//$db['default']['port'] = '3306';
-//$db['default']['database'] = 'heroku_b411e4d29537113';
+$db['default']['hostname'] = 'us-cdbr-iron-east-04.cleardb.net';
+$db['default']['username'] = 'b6f9873480e1fc';
+$db['default']['password'] = '45cb5f51';
+$db['default']['port'] = '3306';
+$db['default']['database'] = 'heroku_b411e4d29537113';
 
 //other configs
 $db['default']['dbdriver'] = 'mysqli';

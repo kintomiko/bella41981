@@ -2,7 +2,7 @@
 default:
     extensions:
         Behat\MinkExtension:
-            base_url: http://localhost:8000
+            base_url: http://bella-club-bella41981.44fs.preview.openshiftapps.com/
             browser_name: chrome
             sessions:
                 sadmin:
@@ -10,4 +10,6 @@ default:
                 admin:
                     selenium2: ~
                 user:
+                    selenium2: ~
+                paricipant:
                     selenium2: ~

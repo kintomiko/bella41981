@@ -7,14 +7,26 @@
  */
 class T_act extends MY_Model{
 
-//    ACT status:
-//    100 pending
-//    200 accepted
-//    201 start confirming
-//    300 closed
-//    400 rejected
+    const ACT_PENDING = 100;
+    const ACT_ACCEPTED = 200;
+    const ACT_START_CONFIRM = 201;
+    const ACT_CLOSED = 300;
+    const ACT_REJECTED = 400;
 
-	public function __construct(){
+
+    const ACT_CONFIRM_PENDING = 100;
+    const ACT_CONFIRM_CONFIRMED = 200;
+
+    const ACT_USER_PART_JOINED = 0;
+    const ACT_USER_PART_CONFIRMED = 1;
+
+
+    const MAX_INVITATION_PER_ACT = 5;
+    const MAX_CONFIRM_PER_ACT = 5;
+
+    const CONFIRM_COUNT_TO_GET_CREDIT = 3;
+
+    public function __construct(){
         parent::__construct();
         $this->load->library('session');
     }
@@ -51,7 +63,7 @@ class T_act extends MY_Model{
         $this->db->set('start_on',$start_on);
         $this->db->set('end_on',$end_on);
         $this->db->set('desc',$desc);
-        $this->db->set('status',100);
+        $this->db->set('status',T_act::ACT_PENDING);
         $this->db->set('max_part',$max_part);
         $this->db->set('min_part',$min_part);
         $this->db->set('credit',$credit);
@@ -85,12 +97,12 @@ class T_act extends MY_Model{
         return ($this->isStarter($actId, $userId) || $this->isParticipant($actId, $userId));
     }
 
-    private function isStarter($id, $userId){
+    public function isStarter($id, $userId){
         $query = $this->db->get_where('t_act',array('ID' => $id, 'STARTER_ID' => $userId));
         return count($query->result())>0? true:false;
     }
 
-    private function isParticipant($id, $userId){
+    public function isParticipant($id, $userId){
         $query = $this->db->get_where('t_act_part',array('ACT_ID' => $id, 'USER_ID' => $userId));
         return count($query->result())>0? true:false;
     }
@@ -112,7 +124,7 @@ class T_act extends MY_Model{
 
         $this->db->set('act_id',$id);
         $this->db->set('user_id',$_SESSION['user']->USER_ID);
-        $this->db->set('status',0);
+        $this->db->set('status',T_act::ACT_USER_PART_JOINED);
         $this->db->insert('t_act_part');
 
         $this->t_system->operateAdd($_SESSION['user']->USER_ID,"加入活动",$act->TITLE);
@@ -134,7 +146,16 @@ class T_act extends MY_Model{
         return $query->result();
     }
 
-    private function getConfirm($actId, $fromUserId, $toUserId){
+    public function getPendingConfirmsByToUser($toUserId){
+        $this->db->select('t_act_confirm.*');
+        $this->db->from('t_act_confirm');
+        $this->db->where('from_id',$toUserId);
+        $this->db->where('status',T_act::ACT_CONFIRM_PENDING);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function getConfirm($actId, $fromUserId, $toUserId){
         $this->db->select('t_act_confirm.*');
         $this->db->from('t_act_confirm');
         $this->db->where('to_id',$toUserId);
@@ -150,6 +171,7 @@ class T_act extends MY_Model{
         $this->db->from('t_act_confirm');
         $this->db->where('to_id',$toUserId);
         $this->db->where('act_id',$actId);
+        $this->db->where('status',T_act::ACT_CONFIRM_CONFIRMED);
         $query = $this->db->get();
         return count($query->result());
     }
@@ -160,26 +182,22 @@ class T_act extends MY_Model{
         $this->db->from('t_act_confirm');
         $this->db->where('from_id',$fromUserId);
         $this->db->where('act_id',$actId);
+        $this->db->where('status',T_act::ACT_CONFIRM_CONFIRMED);
         $query = $this->db->get();
         return count($query->result());
     }
 
-    public function insertConfirm($actId, $fromUserId, $toUserId, $comment){
-        if(!$this->isInAct($actId, $toUserId) ||
-            !$this->isInAct($actId, $fromUserId) ||
-            $this->countGivenConfirm($actId, $fromUserId) >=5 ||
-            $fromUserId == $toUserId)
-            return false;
-        $this->db->set('to_id',$toUserId);
-        $this->db->set('from_id',$fromUserId);
-        $this->db->set('act_id',$actId);
-        $this->db->set('comment',$comment);
-        $this->db->insert('t_act_confirm');
-        return true;
+    private function countSentConfirmInvitationByAct($actId, $toUserId){
+        $this->db->distinct(true);
+        $this->db->select('t_act_confirm.*');
+        $this->db->from('t_act_confirm');
+        $this->db->where('to_id',$toUserId);
+        $this->db->where('act_id',$actId);
+        $query = $this->db->get();
+        return count($query->result());
     }
 
     public function checkAndGrantCredit($actId, $userId){
-        $this->load->model('t_system');
         $this->load->model('t_credit');
         $act = $this->getAct($actId);
         $toUserPart = $this->getActPart($actId, $userId);
@@ -188,9 +206,44 @@ class T_act extends MY_Model{
         }else{
             return false;
         }
-        if($this->countGotConfirm($actId, $userId)>=3 && $toUserPart->STATUS == 0){
+        if($this->countGotConfirm($actId, $userId)>= T_act::CONFIRM_COUNT_TO_GET_CREDIT && $toUserPart->STATUS == 0){
             $this->t_credit->insertCredit($userId, $act->CREDIT);
         }
     }
 
+    public function inviteUserConfirmByAct($actId, $fromUserId, $toUserId){
+        //validation
+        $existingConfirms = $this->getConfirm($actId, $fromUserId, $toUserId);
+        if(count($existingConfirms)>0)
+            return false;
+        if(countSentConfirmInvitationByAct($actId, $toUserId)> T_act::MAX_INVITATION_PER_ACT){
+            return false;
+        }
+        $this->db->set('to_id',$toUserId);
+        $this->db->set('from_id',$fromUserId);
+        $this->db->set('act_id',$actId);
+        $this->db->set('status',T_act::ACT_CONFIRM_PENDING);
+        $this->db->insert('t_act_confirm');
+        return true;
+    }
+
+    public function confirmUserByAct($actId, $fromUserId, $toUserId, $comment){
+        $confirms = $this->getConfirm($actId, $fromUserId, $toUserId);
+        if(count($confirms)!=1 || $confirms[0]->STATUS != T_act::ACT_CONFIRM_PENDING){
+            return false;
+        }
+        if(!$this->isInAct($actId, $toUserId) ||
+            !$this->isInAct($actId, $fromUserId) ||
+            $this->countGivenConfirm($actId, $fromUserId) >= T_act::MAX_CONFIRM_PER_ACT ||
+            $fromUserId == $toUserId)
+            return false;
+        //do update status
+        $this->db->where('to_id',$toUserId);
+        $this->db->where('from_id',$fromUserId);
+        $this->db->where('act_id',$actId);
+        $this->db->set('status',T_act::ACT_CONFIRM_CONFIRMED);
+        $this->db->set('comment',$comment);
+        $this->db->update('t_act_confirm');
+        return true;
+    }
 }

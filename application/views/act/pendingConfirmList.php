@@ -5,7 +5,7 @@
         </a>
         <ol class="breadcrumb pull-left">
             <li><a href="club/dashboard" class="ajax-link">首页</a></li>
-            <li><a id="approveActList" href="club/approveActList" class="ajax-link">审批活动</a></li>
+            <li><a id="actList" href="act/actList" class="ajax-link">全部</a></li>
         </ol>
     </div>
 </div>
@@ -15,7 +15,7 @@
             <div class="box-header">
                 <div class="box-name">
                     <i class="fa fa-th-list"></i>
-                    <span>待审批活动列表</span>
+                    <span>待确认列表</span>
                 </div>
             </div>
             <div class="box-content no-padding">
@@ -24,35 +24,30 @@
                     <tr>
                         <th>活动标题</th>
                         <th>发起者</th>
-                        <th>状态</th>
-                        <th>等级要求</th>
                         <th>所在区域</th>
                         <th>积分奖励</th>
                         <th>活动时间</th>
-                        <th>报名时间</th>
-                        <th>参与人数</th>
+                        <th>待确认用户ID</th>
+                        <th>待确认用户昵称</th>
+                        <th>待确认用户EMAIL</th>
+                        <th>待确认用户等级</th>
                         <th style="width:40px;">操作</th>
                     </tr>
                     </thead>
                     <tbody>
                     <!-- Start: list_row -->
-                    <?php  foreach ($actList as $k=>$row){?>
+                    <?php  foreach ($confirmList as $k=>$row){?>
                         <tr>
-                            <td><?php echo $row->TITLE;?></td>
-                            <td><?php echo $row->STARTER_ID;?></td>
-                            <td>
-                                <?php if($row->STATUS==400){?>已拒绝<?php }?>
-                                <?php if($row->STATUS==300){?>已结束<?php }?>
-                                <?php if($row->STATUS==200){?>组织中<?php }?>
-                                <?php if($row->STATUS==100){?>待审批<?php }?>
-                            </td>
-                            <td><?php echo $row->GRADE;?></td>
-                            <td><?php echo $row->PROVINCE_CODE;?></td>
-                            <td><?php echo $row->CREDIT;?></td>
-                            <td><?php echo $row->START_ON." ~ ".$row->END_ON;?></td>
-                            <td><?php echo $row->REG_START_ON." ~ ".$row->REG_END_ON;?></td>
-                            <td><?php echo $row->CUR_PART." / ".$row->MIN_PART." / ".$row->MAX_PART;?></td>
-                            <td><a class="ajax-link" href="club/viewAct?id=<?php echo $row->ID;?>" title="审批"><i class="fa fa-edit"></i></a>
+                            <td><?php echo $row->act->TITLE;?></td>
+                            <td><?php echo $row->act->STARTER_NAME;?></td>
+                            <td><?php echo $row->act->PROVINCE_CODE;?></td>
+                            <td><?php echo $row->act->CREDIT;?></td>
+                            <td><?php echo $row->act->START_ON." ~ ".$row->act->END_ON;?></td>
+                            <td><?php echo $row->toUser->CODE;?></td>
+                            <td><?php echo $row->toUser->NICKNAME;?></td>
+                            <td><?php echo $row->toUser->EMAIL;?></td>
+                            <td><?php echo $row->toUser->GRADE;?></td>
+                            <td><a class="ajax-link" href="act/viewPendingConfirm?act_id=<?php echo $row->act->ID;?>&to_user_id=<?php echo $row->toUser->USER_ID;?>" title="确认"><i class="fa fa-edit"></i></a>
                             </td>
                         </tr>
                     <?php }?>
@@ -87,3 +82,6 @@
         }
     });
 </script>
+
+
+

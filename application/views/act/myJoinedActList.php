@@ -5,7 +5,7 @@
         </a>
         <ol class="breadcrumb pull-left">
             <li><a href="club/dashboard" class="ajax-link">首页</a></li>
-            <li><a id="myActList" href="club/myActList" class="ajax-link">我的活动</a></li>
+            <li><a id="myJoinedActList" href="act/myJoinedActList" class="ajax-link">我参与的活动</a></li>
         </ol>
     </div>
 </div>
@@ -16,9 +16,6 @@
                 <div class="box-name">
                     <i class="fa fa-th-list"></i>
                     <span>活动列表</span>
-                </div>
-                <div class="box-icons">
-                    <a href="club/actAdd" class="beauty-table-to-json ajax-link">发起活动</a>
                 </div>
             </div>
             <div class="box-content no-padding">
@@ -43,14 +40,14 @@
                         <tr>
                             <td><?php echo $row->TITLE;?></td>
                             <td><?php echo $row->STARTER_ID;?></td>
-                            <td><?php if($row->STATUS==300){?>已结束<?php }?><?php if($row->STATUS==200){?>组织中<?php }?><?php if($row->STATUS==100){?>待审批<?php }?></td>
+                            <td><?php if($row->STATUS==300){?>已结束<?php }?><?php if($row->STATUS==201){?>确认中<?php }?><?php if($row->STATUS==200){?>组织中<?php }?><?php if($row->STATUS==100){?>待审批<?php }?></td>
                             <td><?php echo $row->GRADE;?></td>
                             <td><?php echo $row->PROVINCE_CODE;?></td>
                             <td><?php echo $row->CREDIT;?></td>
                             <td><?php echo $row->START_ON." ~ ".$row->END_ON;?></td>
                             <td><?php echo $row->REG_START_ON." ~ ".$row->REG_END_ON;?></td>
                             <td><?php echo $row->CUR_PART." / ".$row->MIN_PART." / ".$row->MAX_PART;?></td>
-                            <td><a class="ajax-link" href="club/viewAct?id=<?php echo $row->ID;?>" title="查看"><i class="fa fa-edit"></i></a>
+                            <td><a class="ajax-link" href="act/viewAct?id=<?php echo $row->ID;?>" title="查看"><i class="fa fa-edit"></i></a>
                             </td>
                         </tr>
                     <?php }?>

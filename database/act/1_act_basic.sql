@@ -15,9 +15,11 @@ VALUES
   (11, NULL, '信息展示', NULL, 6, 'fa-dropbox'),
   (12, 11, '商品管理', 'club/productList', 1, NULL),
   (13, NULL, '活动管理', '', 1, 'fa-users'),
-  (14, 13, '全部活动', 'club/actList', 1, NULL),
-  (15, 13, '活动审批', 'club/approveActList', 1, NULL),
-  (16, 13, '我的活动', 'club/myActList', 2, NULL);
+  (14, 13, '全部活动', 'act/actList', 1, NULL),
+  (15, 13, '活动审批', 'act/approveActList', 2, NULL),
+  (16, 13, '我参加的活动', 'act/myJoinedActList', 3, NULL),
+  (17, 13, '确认活动', 'act/pendingConfirmList', 5, NULL),
+  (18, 13, '我发起的活动', 'act/myStartActList', 4, NULL);
 
 DELETE FROM t_role_menu;
 INSERT INTO `t_role_menu` (`ID`, `ROLE_CODE`, `MENU_ID`)
@@ -42,7 +44,13 @@ VALUES
   (18, 2, 16),
   (19, 1, 16),
   (20, 0, 16),
-  (21, 0, 14);
+  (21, 0, 14),
+  (22, 2, 17),
+  (23, 1, 17),
+  (24, 0, 17),
+  (25, 0, 18),
+  (26, 1, 18),
+  (27, 2, 18);
 
 DROP TABLE IF EXISTS t_act;
 CREATE TABLE `t_act` (

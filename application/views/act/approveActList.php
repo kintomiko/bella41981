@@ -5,7 +5,7 @@
         </a>
         <ol class="breadcrumb pull-left">
             <li><a href="club/dashboard" class="ajax-link">首页</a></li>
-            <li><a id="actList" href="club/actList" class="ajax-link">全部</a></li>
+            <li><a id="approveActList" href="act/approveActList" class="ajax-link">审批活动</a></li>
         </ol>
     </div>
 </div>
@@ -15,10 +15,7 @@
             <div class="box-header">
                 <div class="box-name">
                     <i class="fa fa-th-list"></i>
-                    <span>活动列表</span>
-                </div>
-                <div class="box-icons">
-                    <a href="club/actAdd" class="beauty-table-to-json ajax-link">发起活动</a>
+                    <span>待审批活动列表</span>
                 </div>
             </div>
             <div class="box-content no-padding">
@@ -55,7 +52,7 @@
                             <td><?php echo $row->START_ON." ~ ".$row->END_ON;?></td>
                             <td><?php echo $row->REG_START_ON." ~ ".$row->REG_END_ON;?></td>
                             <td><?php echo $row->CUR_PART." / ".$row->MIN_PART." / ".$row->MAX_PART;?></td>
-                            <td><a class="ajax-link" href="club/viewAct?id=<?php echo $row->ID;?>" title="查看"><i class="fa fa-edit"></i></a>
+                            <td><a class="ajax-link" href="act/approveAct?id=<?php echo $row->ID;?>" title="审批"><i class="fa fa-edit"></i></a>
                             </td>
                         </tr>
                     <?php }?>
@@ -90,6 +87,3 @@
         }
     });
 </script>
-
-
-

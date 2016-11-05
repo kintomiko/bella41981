@@ -21,7 +21,7 @@
                 <div class="no-move"></div>
             </div>
             <div class="box-content">
-                <form class="form-horizontal" id="actForm" role="form" action="<?php echo base_url('club/doApproveAct');?>" method="post">
+                <form class="form-horizontal" id="actForm" role="form" action="<?php echo base_url('act/doApproveAct');?>" method="post">
                     <input type="hidden" name="act_id" value="<?php echo $act->ID ;?>">
                     <div class="form-group">
                         <label class="col-sm-2 control-label">活动标题</label>
@@ -112,40 +112,13 @@
                             <span class="col-sm-8" style="padding:4px 0 0;"><?php echo $act->DESC ;?></span>
                         </div>
                     </div>
-                    <div class="box-content no-padding">
-                        <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="datatable-1">
-                            <thead>
-                            <tr>
-                                <th>参与者</th>
-                                <th>状态</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <!-- Start: list_row -->
-                            <?php  foreach ($participants as $k=>$row){?>
-                                <tr>
-                                    <td><?php echo $row->USER_ID;?></td>
-                                    <td><?php if($row->STATUS==1){?>已确认<?php }?><?php if($row->STATUS==0){?>已加入<?php }?></td>
-
-                                </tr>
-                            <?php }?>
-                            <!-- End: list_row -->
-                            </tbody>
-                        </table>
-                    </div>
                     <div class="clearfix"></div>
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-2">
-<!--                            for super admin-->
-                            <?php if(in_array('0', explode(",", $_SESSION['user']->AUTHORITY))){?>
+                            <!--                            for super admin-->
                                 <button type="submit" class="btn btn-primary" name="action" value="approve">审批通过</button>
                                 <button type="submit" class="btn btn-primary" name="action" value="reject">拒绝活动</button>
-                            <?php } ?>
-<!--                            for all-->
-                            <button type="submit" class="btn btn-primary" name="action" value="join" <?php if ($isInAct){?> disabled <?php } ?> >
-                                <?php if ($isInAct){?> 已加入 <?php }else{ ?>参与活动 <?php } ?>
-                            </button>
-<!--                            <a class="btn btn-default" onclick="window.history.back()">返 回</a>-->
+                            <!--                            <a class="btn btn-default" onclick="window.history.back()">返 回</a>-->
                         </div>
                     </div>
                 </form>
@@ -161,11 +134,11 @@
             },
             success: function(data) {
                 debugger;
-                    if(data=="true"){
-                        alert("成功！");
-                    }else{
-                        alert("失败！");
-                    }
+                if(data=="true"){
+                    alert("成功！");
+                }else{
+                    alert("失败！");
+                }
                 location.reload();
             }
         });

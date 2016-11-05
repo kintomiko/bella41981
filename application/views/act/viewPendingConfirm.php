@@ -22,7 +22,7 @@
             </div>
             <div class="box-content">
                 在<?php echo $act->START_ON ;?>举行的活动<?php echo $act->TITLE ;?>中，您对会员<?php echo $toUser->NICKNAME."(".$toUser->CODE.")" ;?>的评价如何？
-                <form class="form-horizontal" id="actForm" role="form" action="<?php echo base_url('act/doConfirm');?>" method="post">
+                <form class="form-horizontal" id="confirmForm" role="form" action="<?php echo base_url('act/doConfirm');?>" method="post">
                     <input type="hidden" name="act_id" value="<?php echo $act->ID ;?>">
                     <input type="hidden" name="to_user_id" value="<?php echo $toUser->USER_ID ;?>">
                     <div class="form-group">
@@ -34,8 +34,8 @@
                     <div class="clearfix"></div>
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-2">
-                            <button type="submit" class="btn btn-primary">是个好人</button>
-<!--                            <a class="btn btn-default" onclick="$('#actList').click();">返 回</a>-->
+                            <button type="submit" class="btn btn-primary">是个好人,提交评价</button>
+                            <!--                            <a class="btn btn-default" onclick="$('#actList').click();">返 回</a>-->
                         </div>
                     </div>
                 </form>
@@ -45,5 +45,18 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function() {
+        $("#confirmForm").ajaxForm({
+            beforeSubmit: function(a,f,o) {
+                return true;
+            },
+            success: function(data) {
+                if(data=="true"){
+                    alert("成功！");
+                }else{
+                    alert("失败！");
+                }
+                location.reload();
+            }
+        })
     });
 </script>

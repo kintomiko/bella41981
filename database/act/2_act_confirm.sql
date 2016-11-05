@@ -5,5 +5,6 @@ CREATE TABLE `t_act_confirm` (
   `FROM_ID` bigint(20) NOT NULL,
   `TO_ID` bigint(20) NOT NULL,
   `COMMENT` varchar(1024) DEFAULT NULL,
+  `STATUS` INT(11),
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

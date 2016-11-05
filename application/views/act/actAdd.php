@@ -1,4 +1,17 @@
 <div class="row">
+    <div id="breadcrumb" class="col-xs-12">
+        <a href="#" class="show-sidebar">
+            <i class="fa fa-bars"></i>
+        </a>
+        <ol class="breadcrumb pull-left">
+            <li><a href="club/dashboard" class="ajax-link">首页</a></li>
+            <li><a id="actList" href="act/actList" class="ajax-link">全部活动</a></li>
+            <li><a href="#">发起活动</a></li>
+        </ol>
+
+    </div>
+</div>
+<div class="row">
     <div class="col-xs-12 col-sm-12">
         <div class="box">
             <div class="box-header">
@@ -10,7 +23,7 @@
                 <div class="no-move"></div>
             </div>
             <div class="box-content">
-                <form class="form-horizontal" id="actForm" role="form" action="<?php echo base_url('club/actInsert');?>" method="post">
+                <form class="form-horizontal" id="actForm" role="form" action="<?php echo base_url('act/actInsert');?>" method="post">
                     <div class="form-group">
                         <label class="col-sm-2 control-label">活动标题</label>
                         <div class="col-sm-3">
@@ -53,28 +66,28 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">开始时间</label>
                         <div class="col-sm-3">
-                            <input type="text" id="start_on" name="start_on" class="form-control b_input_date" readonly>
+                            <input type="text" id="start_on" name="start_on" class="form-control b_input_date">
                             <span class="fa fa-calendar txt-danger form-control-feedback"></span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">结束时间</label>
                         <div class="col-sm-3">
-                            <input type="text" id="end_on" name="end_on" class="form-control b_input_date" readonly>
+                            <input type="text" id="end_on" name="end_on" class="form-control b_input_date">
                             <span class="fa fa-calendar txt-danger form-control-feedback"></span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">报名开始时间</label>
                         <div class="col-sm-3">
-                            <input type="text" id="reg_start_on" name="reg_start_on" class="form-control b_input_date" readonly>
+                            <input type="text" id="reg_start_on" name="reg_start_on" class="form-control b_input_date">
                             <span class="fa fa-calendar txt-danger form-control-feedback"></span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">报名结束时间</label>
                         <div class="col-sm-3">
-                            <input type="text" id="reg_end_on" name="reg_end_on" class="form-control b_input_date" readonly>
+                            <input type="text" id="reg_end_on" name="reg_end_on" class="form-control b_input_date">
                             <span class="fa fa-calendar txt-danger form-control-feedback"></span>
                         </div>
                     </div>
@@ -107,10 +120,9 @@
         $('.b_input_date').datepicker({
             changeMonth: true,
             changeYear: true,
-            changeTime: true,
             defaultDate :""
         });
-        $( ".b_input_date" ).datepicker( "option", "dateFormat", "yy-mm-dd HH:MM:ss" );
+        $( ".b_input_date" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
         $('.form-control').tooltip();
         WinMove();
         var regnum = new RegExp("^[0-9]*$");

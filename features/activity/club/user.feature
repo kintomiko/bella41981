@@ -7,7 +7,6 @@ Feature: 普通用户的基本活动管理功能
   Scenario: 会员能使用活动管理
     Given I am on "/club"
     When I follow "活动管理"
-    Then I should see "全部活动"
     And I should see "我的活动"
 
   @mink:user
@@ -19,9 +18,7 @@ Feature: 普通用户的基本活动管理功能
 
   @mink:user
   Scenario: 会员填入恰当信息,能成功发起活动
-    Given I am on "/club"
-    And I follow "活动管理"
-    And I follow "我的活动"
+    Given I am on "/"
     And I follow "发起活动"
     When I fill in the following:
       | title        | 测试活动     |
@@ -48,7 +45,5 @@ Feature: 普通用户的基本活动管理功能
 
   @mink:user
   Scenario: 会员发起活动后,活动不会被发布到全部活动
-    Given I am on "/club"
-    And I follow "活动管理"
-    When I follow "全部活动"
+    Given I am on "/"
     Then I should not see "测试活动"

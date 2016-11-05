@@ -216,7 +216,7 @@ class T_act extends MY_Model{
         $existingConfirms = $this->getConfirm($actId, $fromUserId, $toUserId);
         if(count($existingConfirms)>0)
             return false;
-        if(countSentConfirmInvitationByAct($actId, $toUserId)> T_act::MAX_INVITATION_PER_ACT){
+        if($this->countSentConfirmInvitationByAct($actId, $toUserId)> T_act::MAX_INVITATION_PER_ACT){
             return false;
         }
         $this->db->set('to_id',$toUserId);

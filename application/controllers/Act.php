@@ -128,15 +128,13 @@ class Act extends CI_Controller
         $participants = $this->t_act->getParticipants($actId);
         foreach($participants as $row){
             $user=$this->t_user->get_user($row->USER_ID);
-            if(count($user)>0){
-                $row->USER_DISPLAYNAME=$user[0]->NICKNAME."(".$user[0]->CODE.")";
-                $confirms = $this->t_act->getConfirm($actId, $user[0]->USER_ID, $_SESSION['user']->USER_ID);
-                if(count($confirms)>0){
-                    $row->INVITED=true;
-                    $row->CONFIRMED=$confirms[0]->STATUS == T_act::ACT_CONFIRM_CONFIRMED?true:false;
-                }else{
-                    $row->INVITED=false;
-                }
+            $row->USER_DISPLAYNAME=$user[0]->NICKNAME."(".$user[0]->CODE.")";
+            $confirms = $this->t_act->getConfirm($actId, $user[0]->USER_ID, $_SESSION['user']->USER_ID);
+            if(count($confirms)>0){
+                $row->INVITED=true;
+                $row->CONFIRMED=$confirms[0]->STATUS == T_act::ACT_CONFIRM_CONFIRMED?true:false;
+            }else{
+                $row->INVITED=false;
             }
         }
         $arr=array(

@@ -64,11 +64,11 @@ $active_record = TRUE;
 
 
 //local
-//$db['default']['hostname'] = '127.0.0.1';
-//$db['default']['username'] = 'dev';
-//$db['default']['password'] = '123123';
-//$db['default']['port'] = '3306';
-//$db['default']['database'] = 'app_90zone';
+$db['default']['hostname'] = '127.0.0.1';
+$db['default']['username'] = 'dev';
+$db['default']['password'] = '123123';
+$db['default']['port'] = '3306';
+$db['default']['database'] = 'app_90zone';
 
 //sae
 // $db['default']['hostname'] = 'w.rdc.sae.sina.com.cn';
@@ -78,11 +78,11 @@ $active_record = TRUE;
 //$db['default']['database'] = 'app_90zone';
 
 //openshift
-$db['default']['hostname'] = '172.30.160.144';
-$db['default']['username'] = 'dev';
-$db['default']['password'] = '123123';
-$db['default']['port'] = '3306';
-$db['default']['database'] = 'dev';
+//$db['default']['hostname'] = '172.30.160.144';
+//$db['default']['username'] = 'dev';
+//$db['default']['password'] = '123123';
+//$db['default']['port'] = '3306';
+//$db['default']['database'] = 'dev';
 
 //heroku
 //$db['default']['hostname'] = 'us-cdbr-iron-east-04.cleardb.net';

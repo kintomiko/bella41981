@@ -189,9 +189,9 @@ class Act extends CI_Controller
     public function doInviteConfirm(){
         if (!session_id()) session_start();
         $this->load->model('t_act');
-        $id = $this->input->post('act_id');
+        $act_id = $this->input->post('act_id');
         $inviteUserId = $this->input->post('invite_user_id');
-        echo $this->t_act->inviteUserConfirmByAct($id, $inviteUserId ,$_SESSION['user']->USER_ID) ? "true" : "false";
+        echo $this->t_act->inviteUserConfirmByAct($act_id, $inviteUserId ,$_SESSION['user']->USER_ID) ? "true" : "false";
     }
 
     public function pendingConfirmList(){

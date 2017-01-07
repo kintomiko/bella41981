@@ -10,7 +10,11 @@ class Portal extends CI_Controller {
 	 */
 	public function index(){
 		if (!session_id()) session_start();
-		$this->load->view('index');
+        $this->load->model('t_act');
+        $arr=array(
+            'actList'=>$this->t_act->getActListToPortal()
+        );
+		$this->load->view('index',$arr);
 	}
 	/**
 	 * 积分兑换页面
@@ -31,6 +35,76 @@ class Portal extends CI_Controller {
 		if (!session_id()) session_start();
 		$this->load->view('portal/regGuide');
 	}
+
+    /**
+     * 活动列表页
+     */
+	public function activity(){
+        $this->load->model('t_act');
+        $this->load->library('pagination');
+        $title='';
+        $pageSize=1;
+        if($this->input->post('title')!=""){
+            $title = $this->input->post('title');
+        }
+        if($this->uri->segment(3)!=""){
+            $pageSize = $this->uri->segment(3);
+        }
+        $config['total_rows'] = $this->t_act->getActTotal($title);//这个值是数据的总数
+        $config['per_page'] = '10';
+        $config['first_link'] = "首页";
+        $config['last_link'] = "尾页";
+        $config['prev_link'] = '<';
+        $config['next_link'] = '>';
+        $config['first_tag_open'] = '<li>';//自定义起始页链接
+        $config['first_tag_close'] = '</li> ';
+        $config['last_tag_open'] = '<li>';//自定义结束页链接
+        $config['last_tag_close'] = '</li> ';
+        $config['prev_tag_open'] = '<li>';//自定义上一页链接
+        $config['prev_tag_close'] = '</li> ';
+        $config['next_tag_open'] = '<li>';//自定义下一页链接
+        $config['next_tag_close'] = '</li> ';
+        $config['cur_tag_open'] = '<li><a class="active current">';//自定义当前页链接
+        $config['cur_tag_close'] = '</a></li> ';
+        $config['num_tag_open'] = '<li>';//自定义数字链接
+        $config['num_tag_close'] = '</li> ';
+        $config['base_url']	= base_url('portal/activity');
+        $config['use_page_numbers'] = TRUE;
+        $config['attributes']['rel'] = FALSE;
+        $this->pagination->initialize($config);
+        $arr=array(
+            'actList'=>$this->t_act->getActPage($config['per_page'],$pageSize,$title),
+            'title'=>$title
+        );
+        $this->load->view('portal/activity',$arr);
+    }
+
+    /**
+     * 活动详情页
+     */
+    public function activityInfo(){
+        $this->load->model('t_act');
+        $id = $this->uri->segment(3);
+        $arr=array(
+            'act'=>$this->t_act->getActInfo($id)
+        );
+        $this->load->view('portal/actInfo',$arr);
+    }
+
+    /**
+     * 发起活动页
+     */
+    public function sponsor(){
+        $this->load->model('t_act');
+        $this->load->model('t_user');
+        $arr=array(
+            'actTemLIst'=>$this->t_act->getActTemList(),
+            'actTemType'=>$this->t_act->getActTemType(),
+            'province'=>$this->t_user->get_province(true)
+        );
+        $this->load->view('portal/sponsor',$arr);
+    }
+
 	/**
 	 * 积分说明
 	 */

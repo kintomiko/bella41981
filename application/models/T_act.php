@@ -249,4 +249,71 @@ class T_act extends MY_Model{
         $this->db->update('t_act_confirm');
         return true;
     }
+
+    /**********************我是 portal 分割线***************************/
+
+    public function getActListToPortal(){
+        $this->db->select('t_act.*,t_user.NICKNAME,t_act_img.URL');
+        $this->db->from('t_act,t_user,t_act_img');
+        $this->db->where('t_user.user_id=t_act.STARTER_ID');
+        $this->db->where('t_act_img.act_id=t_act.id');
+        $this->db->where('weight !=',0);
+        $this->db->order_by('weight','DESC');
+        $this->db->order_by('START_ON', 'ASC');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function getActInfo($id){
+        $this->db->select('t_act.*,t_user.NICKNAME,t_act_img.URL,t_province.name as PROVINCE');
+        $this->db->from('t_user,t_act_img,t_act');
+        $this->db->join('t_province','t_act.province_code=t_province.code','left');
+        $this->db->where('t_user.user_id=t_act.STARTER_ID');
+        $this->db->where('t_act_img.act_id=t_act.id');
+        $this->db->where('t_act.id',$id);
+        $query = $this->db->get()->result();
+        return $query[0];
+    }
+
+    public function getActPage($pageNum,$pageSize,$title){
+        $this->db->select('t_act.*,t_user.NICKNAME');
+        $this->db->from('t_act,t_user');
+        $this->db->where('t_user.user_id=t_act.STARTER_ID');
+        $this->db->where('t_act.status !=100 and t_act.status !=400');
+        $this->db->like('t_act.title',$title);
+        $this->db->order_by('t_act.weight','DESC');
+        $this->db->order_by('t_act.STATUS', 'ASC');
+        $this->db->order_by('t_act.START_ON', 'DESC');
+        $query = $this->db->limit($pageNum,($pageSize-1)*$pageNum)->get();
+        return $query->result();
+    }
+
+    public function getActTotal($title){
+        $this->db->select('t_act.*');
+        $this->db->from('t_act');
+        $this->db->where('t_act.status !=100 and t_act.status !=400');
+        $this->db->like('t_act.title',$title);
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+    public function getActTemList(){
+        $this->db->select('t_act_tem.*');
+        $this->db->from('t_act_tem');
+        $this->db->where('status',1);
+        $this->db->order_by('limit','ASC');
+        $this->db->order_by('STARTER_CREDIT', 'ASC');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function getActTemType(){
+        $this->db->select('t_act_tem.LIMIT');
+        $this->db->from('t_act_tem');
+        $this->db->where('status',1);
+        $this->db->group_by('limit');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
 }

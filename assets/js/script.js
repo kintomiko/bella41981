@@ -6,6 +6,8 @@ var $ = jQuery.noConflict();
 $(document).ready(function($) {
 	"use strict";
 
+	var pageClass=$('.nav a[href="'+window.location.href+'"]').attr("page");
+	$('.'+pageClass).addClass("active");
 	/*-------------------------------------------------*/
 	/* =  portfolio isotope
 	/*-------------------------------------------------*/

@@ -46,42 +46,7 @@ color:#565850;
 	<!-- Container -->
 	<div id="container">
 		<header class="clearfix active">
-			<div class="navbar navbar-default navbar-fixed-top">
-				<div class="container">
-					<div class="navbar-header">
-						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-						</button>
-						<a class="navbar-brand" href="http://www.bella41981.com"><img alt="" style="height:40px;" src="<?php echo base_url('assets/image/portal/logo.png');?>"></a>
-					</div>
-					<div class="navbar-collapse collapse">
-						<ul class="nav navbar-nav navbar-right">
-							<li><a href="<?php echo base_url('');?>">首页</a></li>
-							<li style="margin-left:20px;"><a href="<?php echo base_url('portal/shop');?>">积分兑换</a></li>
-							<li style="margin-left:15px;"><a href="https://item.taobao.com/item.htm?spm=a1z10.1-c.w137644-14153656859.39.gcSLMC&id=531690193912" target="_blank">友情赞助</a></li>
-							<li class="drop" style="margin-left:20px;width:45px;"><a class="active" href="#">帮助</a>
-								<ul class="drop-down">
-									<li><a href="<?php echo base_url('portal/regGuide');?>">注册指南</a></li>
-									<li><a href="#">积分说明</a></li>
-								</ul>
-							</li>
-							<?php if(isset($_SESSION['user'])){?>
-								<li><a><?php echo $_SESSION['user']->NICKNAME;?>
-									<i class="fa fa-diamond" style="color:rgba(243, 184, 46, 0.98);"></i> LV.<?php echo $_SESSION['user']->GRADE;?>
-								</a></li>
-								<li style="margin-left:15px;"><a href="<?php echo base_url('club');?>">我的海岸</a></li>
-								<li style="width:50px;margin-left:10px;"><a href="<?php echo base_url('club/logout');?>">退出</a></li>
-							<?php }else{ ?>
-								<li><a href="<?php echo base_url('club/login');?>">登录</a></li>
-								<li style="width:50px;margin-left:10px;"><a href="<?php echo base_url('club/reg');?>">注册</a></li>
-							<?php }?>
-                            <li style="margin-left:0px;"><a style="color:red;" href="https://item.taobao.com/item.htm?spm=a1z10.1-c.w137644-14153656859.40.MdDGWA&id=535566192988" target="_blank">赈灾捐款入口</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
+			<?php include 'header.php'; ?>
 		</header>
 		<div id="slider">
 			<div class="fullwidthbanner-container" style="overflow: visible;">

@@ -1,6 +1,9 @@
+<?php
+date_default_timezone_set('PRC');
+?>
 <!DOCTYPE html>
 <html lang="en" class="no-js webkit chrome win js"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>姚贝娜全国后援会</title>
+	<title>1111111</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
@@ -9,29 +12,30 @@
 	<link href="<?php echo base_url('assets/css/portal/css');?>" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/portal/fullwidth.css');?>" media="screen">
 	<link rel="stylesheet" href="<?php echo base_url('assets/css/portal/bootstrap.css');?>" type="text/css" media="screen">
+	<link rel="stylesheet" type="text/css" href="assets/css/portal/owl.carousel.css" media="screen">
+	<link rel="stylesheet" type="text/css" href="assets/css/portal/owl.theme.css" media="screen">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/portal/font-awesome.css');?>" media="screen">
+
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/portal/style.css');?>" media="screen">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/portal/responsive.css');?>" media="screen">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/portal/swipeslider.css');?>">
-	<!-- <link rel="stylesheet" type="text/css" href="assets/new/Convertible_files/settings.css" media="screen"> 
-	
-	<link rel="stylesheet" type="text/css" href="assets/new/Convertible_files/magnific-popup.css" media="screen">
-	<link rel="stylesheet" type="text/css" href="assets/new/Convertible_files/owl.carousel.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="assets/new/Convertible_files/owl.theme.css" media="screen">
-	<link rel="stylesheet" type="text/css" href="assets/new/Convertible_files/jquery.bxslider.css" media="screen">-->
+<!--	<link rel="stylesheet" type="text/css" href="assets/new/Convertible_files/settings.css" media="screen"> -->
+
+<!--	<link rel="stylesheet" type="text/css" href="assets/new/Convertible_files/magnific-popup.css" media="screen">-->
+
+<!--	<link rel="stylesheet" type="text/css" href="assets/new/Convertible_files/jquery.bxslider.css" media="screen">-->
 	
 
 	
-	<!-- <script type="text/javascript" src="assets/new/Convertible_files/jquery.migrate.js"></script> 
-	<script type="text/javascript" src="assets/new/Convertible_files/jquery.magnific-popup.min.js"></script>
-	<script type="text/javascript" src="assets/new/Convertible_files/owl.carousel.min.js"></script>
-	<script type="text/javascript" src="assets/new/Convertible_files/raphael-min.js"></script>
-	<script type="text/javascript" src="assets/new/Convertible_files/DevSolutionSkill.min.js"></script>
-	<script type="text/javascript" src="assets/new/Convertible_files/retina-1.1.0.min.js"></script>
-	<script type="text/javascript" src="assets/new/Convertible_files/jquery.bxslider.min.js"></script>
-	<script type="text/javascript" src="assets/new/Convertible_files/plugins-scroll.js"></script>
-	<script type="text/javascript" src="assets/new/Convertible_files/jquery.themepunch.revolution.min.js"></script>
-	<script type="text/javascript" src="assets/new/Convertible_files/script.js"></script>-->
+<!--	<script type="text/javascript" src="assets/new/Convertible_files/jquery.migrate.js"></script> -->
+<!--	<script type="text/javascript" src="assets/new/Convertible_files/jquery.magnific-popup.min.js"></script>-->
+<!--	<script type="text/javascript" src="assets/new/Convertible_files/raphael-min.js"></script>-->
+<!--	<script type="text/javascript" src="assets/new/Convertible_files/DevSolutionSkill.min.js"></script>-->
+<!--	<script type="text/javascript" src="assets/new/Convertible_files/retina-1.1.0.min.js"></script>-->
+<!--	<script type="text/javascript" src="assets/new/Convertible_files/jquery.bxslider.min.js"></script>-->
+
+<!--	<script type="text/javascript" src="assets/new/Convertible_files/jquery.themepunch.revolution.min.js"></script>-->
+<!--	<script type="text/javascript" src="assets/new/Convertible_files/script.js"></script>-->
 	
 
 	<!--[if lt IE 9]>
@@ -49,73 +53,32 @@ header .navbar-nav > li > a{
 .navbar-header a{
 	padding:10px 0 0 !important;
 }
+.upper-box h1{
+	font-family:"华文行楷";
+}
+.act{
+	background-color: #267EE0;
+	color: #fff;
+	font-family: "黑体";
+	font-weight: 600;
+	font-size: 22px;
+	padding: 10px 24px;
+	border: transparent;
+	border-bottom: 2px solid #147744;
+	border-radius: 5px;
+}
+.act:hover{
+	color: #fff;
+	background-color: #0E5AB9;
+	border-color: #000;
+}
 </style>
 </head>
 <body>
 	<!-- Container -->
 	<div id="container">
 		<header class="clearfix active">
-			<div class="navbar navbar-default navbar-fixed-top">
-				 <!-- <div class="top-line">
-					<div class="container">
-						<p>
-							<span><i class="fa fa-weibo"></i><a style="color:#9CA2A3;" href="http://weibo.com/yaobeinafans?from=myfollow_all&is_all=1" target="_blank">姚贝娜全国歌迷会</a></span>
-							<span><i class="fa fa-diamond"></i>392457740</span>
-						</p>
-					</div>
-				</div>  -->
-				<div class="container">
-					<div class="navbar-header">
-						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-						</button>
-						<a class="navbar-brand" href="http://www.bella41981.com"><img alt="" style="height:40px;" src="<?php echo base_url('assets/image/portal/logo.png');?>"></a>
-					</div>
-					<div class="navbar-collapse collapse">
-						<ul class="nav navbar-nav navbar-right">
-							<li><a class="active" href="#">首页</a></li>
-							<!-- <li class="drop"><a href="http://demo.cssmoban.com/cssthemes3/mbts_23_convertible/index.html">Sliders</a>
-								<ul class="drop-down">
-									<li><a href="http://demo.cssmoban.com/cssthemes3/mbts_23_convertible/index.html">Home Default</a></li>
-									<li><a href="http://demo.cssmoban.com/cssthemes3/mbts_23_convertible/home-shop.html">Home Shop</a></li>
-									<li><a href="http://demo.cssmoban.com/cssthemes3/mbts_23_convertible/home-portfolio.html">Home Portfolio</a></li>
-									<li><a href="http://demo.cssmoban.com/cssthemes3/mbts_23_convertible/home-blog.html">Home blog</a></li>
-									<li><a href="http://demo.cssmoban.com/cssthemes3/mbts_23_convertible/single-page.html">Single Page</a></li>
-									<li><a href="http://demo.cssmoban.com/cssthemes3/mbts_23_convertible/home-boxed.html">Home Boxed</a></li>
-									<li class="drop"><a href="http://demo.cssmoban.com/cssthemes3/mbts_23_convertible/index.html#">Level 3</a>
-										<ul class="drop-down level3">
-											<li><a href="http://demo.cssmoban.com/cssthemes3/mbts_23_convertible/index.html#">Level 3</a></li>
-											<li><a href="http://demo.cssmoban.com/cssthemes3/mbts_23_convertible/index.html#">Level 3</a></li>
-											<li><a href="http://demo.cssmoban.com/cssthemes3/mbts_23_convertible/index.html#">Level 3</a></li>
-										</ul>
-									</li>									
-								</ul>
-							</li> -->
-							<li style="margin-left:20px;"><a href="<?php echo base_url('portal/shop');?>">积分兑换</a></li>
-							<li style="margin-left:15px;"><a href="https://item.taobao.com/item.htm?spm=a1z10.1-c.w137644-14153656859.39.gcSLMC&id=531690193912" target="_blank">友情赞助</a></li>
-							<li class="drop" style="margin-left:20px;width:45px;"><a href="#">帮助</a>
-								<ul class="drop-down">
-									<li><a href="<?php echo base_url('portal/regGuide');?>">注册指南</a></li>
-									<li><a href="<?php echo base_url('portal/numerical');?>">积分说明</a></li>
-								</ul>
-							</li>
-							<?php if(isset($_SESSION['user'])){?>
-								<li><a><?php echo $_SESSION['user']->NICKNAME;?>
-									<i class="fa fa-diamond" style="color:rgba(243, 184, 46, 0.98);"></i> LV.<?php echo $_SESSION['user']->GRADE;?>
-								</a></li>
-								<li style="margin-left:15px;"><a href="<?php echo base_url('club');?>">我的海岸</a></li>
-								<li style="width:50px;margin-left:10px;"><a href="<?php echo base_url('club/logout');?>">退出</a></li>
-							<?php }else{ ?>
-								<li><a href="<?php echo base_url('club/login');?>">登录</a></li>
-								<li style="width:50px;margin-left:10px;"><a href="<?php echo base_url('club/reg');?>">注册</a></li>
-							<?php }?>
-                            <li style="margin-left:0px;"><a style="color:red;" href="https://item.taobao.com/item.htm?spm=a1z10.1-c.w137644-14153656859.40.MdDGWA&id=535566192988" target="_blank">赈灾捐款入口</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
+			<?php include 'portal/header.php'; ?>
 		</header>
 		<div class="htmleaf-container" style="padding-top:57px;">
 			<article class="container" style="margin:0;padding:0;max-width:1920px;">
@@ -176,7 +139,160 @@ header .navbar-nav > li > a{
 				</div>
 				<img class="shadow-image" alt="" src="<?php echo base_url('assets/image/portal/shadow.png');?>">
 			</div>
+			<div class="why-convertible-box">
+				<div class="container">
+					<div class="upper-box">
+						<div class="row">
+							<div class="col-md-6">
+								<h1>为她做一点微小的 <span>事情</span></h1>
+								<p>吧啦吧啦吧啦吧啦吧啦一堆</p>
+								<p>吧啦吧啦吧啦吧啦吧啦一堆</p>
+								<div align="center"><a href="<?php echo base_url('portal/sponsor');?>" class="btn btn-default act">我要发起</a></div>
+							</div>
+							<div class="col-md-6">
+								<ul class="tag-list">
+									<li><a><i class="fa fa-check-circle"></i>自由发起活动</a></li>
+									<li><a><i class="fa fa-check-circle"></i>积分奖励都带走</a></li>
+									<li><a><i class="fa fa-check-circle"></i>爱豆信息交流</a></li>
+									<li><a><i class="fa fa-check-circle"></i>线上娱乐，线下集聚</a></li>
+									<li><a><i class="fa fa-check-circle"></i>参与人可导出，省力方便</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+				<div class="staff-box">
+					<div class="container">
+						<div class="row">
+						<div class="col-md-9">
+						<h3>活动</h3>
+						<div id="carousel-example-generic3" class="carousel slide" data-ride="carousel">
+
+							<!-- Wrapper for slides -->
+							<div class="carousel-inner">
+								<?php  foreach ($actList as $k=>$row){if(($k+1)%3==1){?>
+									<div class="item <?php if($k==0){ ?>active<?php }?>">
+										<div class="row">
+											<div class="owl-item col-md-4"><div class="item news-item">
+													<div class="inner-item">
+														<img alt="" src="<?php echo $row->URL;?>">
+														<div class="hover-item">
+															<ul>
+																<li><a class="autor" ><i class="fa fa-user"></i> <?php echo $row->NICKNAME;?></a></li>
+																<li><a class="date" ><i class="fa fa-clock-o"></i> <?php echo substr($row->START_ON,0,10);?></a></li>
+																<li><a class="comment-numb" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+																		<?php if(date('Y-m-d H:i:s')<$row->REG_START_ON){ ?>报名未开始<?php }?>
+																		<?php if(date('Y-m-d H:i:s')>$row->REG_START_ON && date('Y-m-d H:i:s')<$row->REG_END_ON){ ?>报名进行中 . . .<?php }?>
+																		<?php if(date('Y-m-d H:i:s')>$row->REG_END_ON){ ?>报名已结束<?php }?>
+																	</a></li>
+															</ul>
+														</div>
+													</div>
+													<div style="height:130px;">
+														<h5><?php echo $row->TITLE;?></h5>
+														<p><?php echo $row->BRIEF;?></p>
+													</div>
+													<a class="read-more" href="<?php echo base_url('portal/activityInfo') ?>/<?php echo $row->ID;?>">活动详情 <i class="fa fa-arrow-right"></i></a>
+												</div>
+											</div>
+									<?php if($k==count($actList)-1){ ?></div></div><?php }?>
+								<?php }else{  if(($k+1)%3==0){ ?>
+											<div class="owl-item col-md-4"><div class="item news-item">
+													<div class="inner-item">
+														<img alt="" src="<?php echo $row->URL;?>">
+														<div class="hover-item">
+															<ul>
+																<li><a class="autor" ><i class="fa fa-user"></i> <?php echo $row->NICKNAME;?></a></li>
+																<li><a class="date" ><i class="fa fa-clock-o"></i> <?php echo substr($row->START_ON,0,10);?></a></li>
+																<li><a class="comment-numb" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+																		<?php if(date('Y-m-d H:i:s')<$row->REG_START_ON){ ?>报名未开始<?php }?>
+																		<?php if(date('Y-m-d H:i:s')>$row->REG_START_ON && date('Y-m-d H:i:s')<$row->REG_END_ON){ ?>报名进行中 . . .<?php }?>
+																		<?php if(date('Y-m-d H:i:s')>$row->REG_END_ON){ ?>报名已结束<?php }?></a></li>
+															</ul>
+														</div>
+													</div>
+													<div style="height:130px;">
+														<h5><?php echo $row->TITLE;?></h5>
+														<p><?php echo $row->BRIEF;?></p>
+													</div>
+													<a class="read-more" href="<?php echo base_url('portal/activityInfo') ?>/<?php echo $row->ID;?>">活动详情 <i class="fa fa-arrow-right"></i></a>
+												</div>
+											</div>
+										</div>
+									</div>
+								<?php }else{?>
+									<div class="owl-item col-md-4"><div class="item news-item">
+											<div class="inner-item">
+												<img alt="" src="<?php echo $row->URL;?>">
+												<div class="hover-item">
+													<ul>
+														<li><a class="autor" ><i class="fa fa-user"></i> <?php echo $row->NICKNAME;?></a></li>
+														<li><a class="date" ><i class="fa fa-clock-o"></i> <?php echo substr($row->START_ON,0,10);?></a></li>
+														<li><a class="comment-numb" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+																<?php if(date('Y-m-d H:i:s')<$row->REG_START_ON){ ?>报名未开始<?php }?>
+																<?php if(date('Y-m-d H:i:s')>$row->REG_START_ON && date('Y-m-d H:i:s')<$row->REG_END_ON){ ?>报名进行中 . . .<?php }?>
+																<?php if(date('Y-m-d H:i:s')>$row->REG_END_ON){ ?>报名已结束<?php }?></a></li>
+													</ul>
+												</div>
+											</div>
+											<div style="height:130px;">
+												<h5><?php echo $row->TITLE;?></h5>
+												<p><?php echo $row->BRIEF;?></p>
+											</div>
+											<a class="read-more" href="<?php echo base_url('portal/activityInfo') ?>/<?php echo $row->ID;?>">活动详情 <i class="fa fa-arrow-right"></i></a>
+
+										</div></div>
+									<?php if($k==count($actList)-1){ ?></div></div><?php }?>
+								<?php }   }}?>
+							</div>
+							<!-- Controls -->
+<!--							<a class="left carousel-control" href="#carousel-example-generic3" data-slide="prev">-->
+<!--								<span class="glyphicon glyphicon-chevron-left"></span>-->
+<!--							</a>-->
+							<a class="right carousel-control" href="#carousel-example-generic3" data-slide="next">
+								<span class="glyphicon glyphicon-chevron-right"></span>
+							</a>
+						</div>
+							</div>
+							<div class="col-md-3">
+								<h3>公告</h3>
+								<div class="sidebar-widgets" style="padding-top:15px;">
+									<div class="tabs-widget widget">
+										<ul class="tab-links">
+											<li><a class="tab-link1 active" href="#">最新公告</a></li>
+										</ul>
+										<div class="tab-box">
+											<div class="tab-content active" style="display: block;">
+												<div>
+													<h6 align="center">最新公告</h6>
+													<p>1111111111111111111111112222一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一<p>
+												</div>
+												<hr></hr>
+												<ul class="post-popular">
+													<li>
+														<h6><a href="#">最新公告最新公告最新公告最新公告最新公告</a>
+													<div align="right">2016-10-01</div>
+													</h6>
+													</li>
+													<li>
+														<h6><a href="#">最新公告最新公告最新公告最新公告最新公告</a>
+															<div align="right">2016-10-01</div>
+														</h6>
+													</li>
+												</ul>
+											</div>
+
+										</div>
+									</div>
+									</div>
+							</div>
+							</div>
+					</div>
+				</div>
 		</div>
+
 		<footer>
 			<div class="footer-line">
 				<div class="container">
@@ -190,6 +306,7 @@ header .navbar-nav > li > a{
 	<!-- <script type="text/javascript" src="assets/new/Convertible_files/jquery.min.js"></script> 
 	<script type="text/javascript" src="assets/new/Convertible_files/bootstrap.js"></script>-->
 	<script src="<?php echo base_url('assets/js/bootstrap.js');?>"></script>
+	<script type="text/javascript" src="<?php echo base_url('assets/js/owl.carousel.min.js');?>"></script>
 	<script type="text/javascript" src="<?php echo base_url('assets/js/swipeslider.min.js');?>"></script>
 	<script type="text/javascript" src="<?php echo base_url('assets/js/script.js');?>"></script>
 	<script type="text/javascript">
@@ -198,7 +315,7 @@ header .navbar-nav > li > a{
 		    	autoPlayTimeout:5000,
 		    	sliderHeight: '40%',
 		    	prevNextButtons:false
-		      }); 
+		      });
 		});
 		function signed(){ 
 			<?php if(isset($_SESSION['user'])){?>

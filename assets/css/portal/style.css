@@ -645,7 +645,7 @@ body {
 }
 
 .carousel-control.left:before {
-    font-family: '微软雅黑';
+    font-family: 'FontAwesome';
     content: "\f104";
     position: absolute;
     font-size: 19px;
@@ -660,7 +660,7 @@ body {
 }
 
 .carousel-control.right:before {
-    font-family: '微软雅黑';
+    font-family: 'FontAwesome';
     content: "\f105";
     position: absolute;
     font-size: 19px;
@@ -951,7 +951,7 @@ body {
 }
 
 .news-item:hover .inner-item img {
-    -webkit-filter: blur(2px) grayscale(1);
+    -webkit-filter: blur(2px) /*grayscale(1)*/;
     -moz-filter: blur(2px) grayscale(1);
     -o-filter: blur(2px) grayscale(1);
     -ms-filter: blur(2px) grayscale(1);
@@ -1028,7 +1028,8 @@ a.read-more:hover i {
     padding: 10px;
     margin-left: -100%;
     text-decoration: none;
-    background: #117bf1
+    /*background: #117bf1*/
+    background:#F38033;
 }
 
 .hover-item ul li a i {
@@ -1058,7 +1059,7 @@ a.read-more:hover i {
     -o-transition: all 0.4s ease-in-out;
 }
 
-.item:hover .hover-item ul li a {
+.news-item:hover .hover-item ul li a {
     margin-left: 0;
 }
 
@@ -1252,7 +1253,7 @@ ul.device-list li.device4 {
 }
 
 .staff-box {
-    padding: 50px 0;
+    /*padding: 50px 0;*/
     border-bottom: 1px solid #dedede;
 }
 
@@ -1915,7 +1916,7 @@ ul.filter li a:hover i {
 }
 
 .portfolio-container .work-post {
-    margin: 15px;
+    /*margin: 15px;*/
 }
 
 .portfolio-container .work-post .work-post-content,
@@ -2066,11 +2067,11 @@ ul.pagination-list li a:hover {
     font-family: '微软雅黑', sans-serif;
     font-weight: 300;
     margin: 0;
-    margin-left: 55px;
+    /*margin-left: 55px;*/
 }
 
 .tabs-widget .tab-content ul li h6 a {
-    color: #aeaeae;
+    color: #868585;
     text-decoration: none;
     display: inline-block;
 }
@@ -2206,6 +2207,7 @@ ul.contact-information-list li i {
 }
 
 #contact-form input[type="text"],
+#contact-form select,
 #contact-form textarea,
 .comment-form input[type="text"],
 .comment-form textarea {
@@ -2230,7 +2232,7 @@ ul.contact-information-list li i {
 }
 
 #contact-form textarea {
-    height: 110px;
+    /*height: 110px;*/
     padding-left: 36px;
 }
 
@@ -2498,14 +2500,14 @@ ul.pricing-table:hover {
 ul.pricing-table li {
     width: 100%;
     text-align: center;
-    padding: 15px 0;
+    padding: 10px 0;
     border: 1px solid #dbdbdb;
     border-top: none;
     background: #fff;
 }
 
 ul.pricing-table li:first-child {
-    padding: 35px 0;
+    /*padding: 35px 0;*/
     border: none;
     background: #0076f9;
 }
@@ -2518,7 +2520,7 @@ ul.pricing-table li p {
 
 ul.pricing-table li:first-child p {
     color: #fff;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 700;
     line-height: 28px;
 }

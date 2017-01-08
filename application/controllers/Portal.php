@@ -40,6 +40,7 @@ class Portal extends CI_Controller {
      * 活动列表页
      */
 	public function activity(){
+        if (!session_id()) session_start();
         $this->load->model('t_act');
         $this->load->library('pagination');
         $title='';
@@ -83,10 +84,12 @@ class Portal extends CI_Controller {
      * 活动详情页
      */
     public function activityInfo(){
+        if (!session_id()) session_start();
         $this->load->model('t_act');
         $id = $this->uri->segment(3);
         $arr=array(
-            'act'=>$this->t_act->getActInfo($id)
+            'act'=>$this->t_act->getActInfo($id),
+            'partList'=>$this->t_act->getActPartList($id)
         );
         $this->load->view('portal/actInfo',$arr);
     }
@@ -144,7 +147,39 @@ class Portal extends CI_Controller {
 			echo "false";
 		}
 	}
-	
+
+    /**
+     * 发起活动
+     */
+    public function sponAct(){
+        $this->load->model('t_act');
+        $temId=$this->input->post('temId');
+        $title = $this->input->post('title');
+        $brief=$this->input->post('brief');
+        $imgUrl=$this->input->post('imgUrl');
+        $min_part=$this->input->post('min_part');
+        $province_code=$this->input->post('province_code');
+        $location=$this->input->post('location');
+        $start_on=$this->input->post('start_on');
+        $end_on=$this->input->post('end_on');
+        $reg_start_on=$this->input->post('reg_start_on');
+        $reg_end_on=$this->input->post('reg_end_on');
+        $desc=$this->input->post('desc');
+        $result=$this->t_act->addAct($temId,$title,$brief,$imgUrl,$min_part,
+            $province_code,$location,$start_on,$end_on,$reg_start_on,$reg_end_on,$desc);
+        echo json_encode($result);
+    }
+
+    /**
+     * 参加活动
+     */
+    public function enterAct(){
+        $this->load->model('t_act');
+        $result=(object)array();
+        $actId=$this->input->post("actId");
+        $result=$this->t_act->enterAct($actId);
+        echo json_encode($result);
+    }
 	/**
 	 * 发送邮件方法
 	 * @param unknown_type $account

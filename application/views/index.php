@@ -1,6 +1,3 @@
-<?php
-date_default_timezone_set('PRC');
-?>
 <!DOCTYPE html>
 <html lang="en" class="no-js webkit chrome win js"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>1111111</title>

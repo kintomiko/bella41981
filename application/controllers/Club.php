@@ -546,5 +546,6 @@ class Club extends CI_Controller {
 		$smtp->debug = false;//是否显示发送的调试信息
 		$state = $smtp->sendmail($smtpemailto, $smtpusermail, $mailtitle, $mailcontent, $mailtype);
 	}
-
+	
+	
 }

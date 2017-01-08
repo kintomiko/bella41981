@@ -955,7 +955,7 @@ body {
     -moz-filter: blur(2px) grayscale(1);
     -o-filter: blur(2px) grayscale(1);
     -ms-filter: blur(2px) grayscale(1);
-    filter: blur(2px) grayscale(1);
+    /*filter: blur(2px) grayscale(1);*/
 }
 
 .latest-post {
@@ -2207,6 +2207,7 @@ ul.contact-information-list li i {
 }
 
 #contact-form input[type="text"],
+#contact-form input[type="number"],
 #contact-form select,
 #contact-form textarea,
 .comment-form input[type="text"],

@@ -6,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="<?php echo base_url('assets/image/favicon.png');?>" >
-    <link href="<?php echo base_url('assets/css/portal/css');?>" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/portal/fullwidth.css');?>" media="screen">
     <link rel="stylesheet" href="<?php echo base_url('assets/css/portal/bootstrap.css');?>" type="text/css" media="screen">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/portal/font-awesome.css');?>" media="screen">
@@ -46,6 +45,10 @@
         .tab-links a.active{
             color:#007aff;
         }
+        .col-md-6 p{
+            color: #5d5b5b;
+            font-weight:400;
+        }
     </style>
 </head>
 <body>
@@ -65,7 +68,7 @@
                         <div class="col-md-6" style="padding-top:10px;">
                             <h2><?php echo $act->TITLE;?></h2>
                             <p><?php echo $act->BRIEF;?></p></br>
-                            <p><label>活动积分：</label><span><?php echo $act->CREDIT;?></span></p>
+                            <p><label>活动积分：</label><span><?php echo $act->CREDIT;?>分</span></p>
                             <p><label>活动地点：</label><span><?php echo $act->LOCATION;?></span></p>
                             <p><label>活动时间：</label><span><?php echo substr($act->START_ON,0,16);?></span> —
                                 <span><?php echo substr($act->END_ON,0,16);?></span>
@@ -76,10 +79,18 @@
                             <p><label>活动人限：</label><span><?php echo $act->MIN_PART;?></span> -
                                 <span><?php echo $act->MAX_PART;?></span>人
                             </p>
-                            <p><label>已报人数：</label><span><?php echo $act->MAX_PART;?></span>人
+                            <p><label>报名限制：</label><span><?php echo $act->GRADE;?>级以上</span>
                             </p>
-                            <span style="font-size:20px;color:red;font-weight:bold;">报名进行中 . . . . . .</span>
-                            <div style="padding-top:15px;"><a class="btn btn-default act" onclick="enter();">我要报名</a></div>
+                            <p><label>已报人数：</label><span><?php echo $act->CUR_PART;?></span>人
+                            </p><br>
+                            <span style="font-size:20px;font-weight:bold;">
+                                <?php if(date('Y-m-d H:i:s')<$act->REG_START_ON){ ?><span style="color:#8e8a8a;">报名未开始</span><?php }?>
+                                <?php if(date('Y-m-d H:i:s')>$act->REG_START_ON && date('Y-m-d H:i:s')<$act->REG_END_ON){ ?><span style="color:#0d8e4d;">报名进行中 . . .</span><?php }?>
+                                <?php if(date('Y-m-d H:i:s')>$act->REG_END_ON){ ?><span style="color:#000;">报名已结束</span><?php }?>
+                            </span>
+                            <?php if(date('Y-m-d H:i:s')>$act->REG_START_ON && date('Y-m-d H:i:s')<$act->REG_END_ON){ ?>
+                                <div style="padding-top:15px;"><a class="btn btn-default act" onclick="enter();">我要报名</a></div>
+                            <?php }?>
                         </div>
                     </div>
                     <div class="row" style="padding-top:20px;">
@@ -95,10 +106,14 @@
                                             <?php echo $act->DESC;?>
                                         </div>
                                         <div class="tab-content" style="display: none;">
-                                            暂无
+                                            <div style="padding:5px 20px;">
+                                                <?php  foreach ($partList as $row){?>
+                                                    <div style="margin-top:5px;"> LV.<?php echo $row->GRADE;?>&nbsp;&nbsp;&nbsp;<?php echo $row->NICKNAME;?></div>
+                                                <?php }?>
+                                            </div>
                                         </div>
                                         <div class="tab-content" style="display: none;">
-                                            <div><label>活动省份：</label><span><?php echo $act->PROVINCE;?></span></div>
+                                            <div><label>活动省份：</label><span><?php if($act->PROVINCE==""){ ?>无<?php }else{echo $act->PROVINCE;} ?></span></div>
                                             <div><label>发 起 人 &nbsp;：</label><span><?php echo $act->NICKNAME;?></span></div>
                                         </div>
                                     </div>
@@ -122,6 +137,7 @@
     <!-- <script type="text/javascript" src="assets/new/Convertible_files/jquery.min.js"></script>
     <script type="text/javascript" src="assets/new/Convertible_files/bootstrap.js"></script>-->
     <script src="<?php echo base_url('assets/js/bootstrap.js');?>"></script>
+    <script src="<?php echo base_url('assets/lib/layer/layer.js');?>"></script>
     <script type="text/javascript" src="<?php echo base_url('assets/js/script.js');?>"></script>
     <script>
         $(function(){
@@ -129,9 +145,19 @@
         })
         function enter(){
             <?php if(isset($_SESSION['user'])){?>
-            alert("登录过了")
+            $.ajax({
+                url: "<?php echo base_url('portal/enterAct');?>",
+                type: 'post',
+                data: {
+                    actId: "<?php echo $act->ID;?>"
+                },
+                dataType:"json",
+                success: function (data) {
+                    layer.msg(data.msg);
+                }
+            })
             <?php }else{ ?>
-            alert("请先登录！");
+            layer.msg('请先登录！');
             <?php }?>
         }
     </script>

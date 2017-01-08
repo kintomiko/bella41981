@@ -35,7 +35,7 @@
         }
         .check{
             position:absolute;
-            border-width:18px;
+            border-width:16px;
             border-color: #BA2727 transparent transparent #BA2727;
             border-style: solid;
         }
@@ -77,28 +77,35 @@
             <div class="portfolio-box with-4-col home-portfolio">
                 <div class="container">
                     <div class="col-md-3">
-                        <form id="contact-form" class="contact-work-form2">
+                        <form id="contact-form" action="<?php echo base_url('portal/sponAct');?>" class="contact-work-form2" method="post">
+                            <input type="hidden" name="temId" value=""/>
                             <div class="text-input">
                                 <div class="float-input">
-                                    <input name="mail" id="mail2" type="text" placeholder="活动名称">
+                                    <input name="title" type="text" placeholder="活动名称" maxlength="20">
                                     <span><i class="fa fa-bullhorn"></i></span>
                                 </div>
                             </div>
                             <div class="text-input">
                                 <div class="float-input" >
-                                    <input name="mail" id="mail2" type="text" placeholder="简介">
+                                    <input name="brief" type="text" placeholder="简介" maxlength="50">
                                     <span><i class="fa fa-bars"></i></span>
                                 </div>
                             </div>
                             <div class="text-input">
                                 <div class="float-input" >
-                                    <input name="name" id="name2" type="text" placeholder="最低参与人数">
+                                    <input name="imgUrl" type="text" placeholder="活动宣传图地址" >
+                                    <span><i class="fa fa-picture-o"></i></span>
+                                </div>
+                            </div>
+                            <div class="text-input">
+                                <div class="float-input" >
+                                    <input name="min_part" type="number" placeholder="最低参与人数" >
                                     <span><i class="fa fa-user"></i></span>
                                 </div>
                             </div>
                             <div class="text-input">
                                 <div class="float-input" >
-                                    <select placeholder="简介">
+                                    <select name="province_code">
                                         <optgroup label="活动所在省份">
                                             <option value="">无</option>
                                             <?php  foreach ($province as $row){?>
@@ -111,39 +118,39 @@
                             </div>
                             <div class="text-input">
                                 <div class="float-input">
-                                    <input name="" id="mail2" type="text" placeholder="地点">
+                                    <input name="location" type="text" placeholder="地点" >
                                     <span><i class="fa fa-location-arrow"></i></span>
                                 </div>
                             </div>
                             <div class="text-input">
                                 <div class="float-input">
-                                    <input type="text" placeholder="活动开始时间"  id="actStart"  name ="Q_startDate_D_GT"/>
+                                    <input type="text" placeholder="活动开始时间"  id="actStart"  name ="start_on" />
                                     <span><i class="fa fa-calendar"></i></span>
                                 </div>
                                 </div>
                             <div class="text-input">
                                 <div class="float-input">
-                                    <input type="text" placeholder="活动结束时间"  id="actEnd"  name ="Q_startDate_D_GT"/>
+                                    <input type="text" placeholder="活动结束时间"  id="actEnd"  name ="end_on" />
                                     <span><i class="fa fa-calendar"></i></span>
                                 </div>
                             </div>
                             <div class="text-input">
                                 <div class="float-input">
-                                    <input type="text" placeholder="报名开始时间"  id="enterStart"  name ="Q_startDate_D_GT"/>
+                                    <input type="text" placeholder="报名开始时间"  id="enterStart"  name ="reg_start_on" />
                                     <span><i class="fa fa-calendar"></i></span>
                                 </div>
                                 </div>
                             <div class="text-input">
                                 <div class="float-input">
-                                    <input type="text" placeholder="报名结束时间"  id="enterEnd"  name ="Q_startDate_D_GT"/>
+                                    <input type="text" placeholder="报名结束时间"  id="enterEnd"  name ="reg_end_on" />
                                     <span><i class="fa fa-calendar"></i></span>
                                 </div>
                             </div>
                             <div class="textarea-input">
-                                <textarea name="comment" rows="10" placeholder="详述及要求"></textarea>
+                                <textarea name="desc" rows="10" placeholder="详述及要求"></textarea>
                                 <span><i class="fa fa-file-text-o"></i></span>
                             </div>
-                            <a class="btn btn-default act" onclick="enter();">我要报名</a>
+                            <input class="btn btn-default act" type="submit" value="发 起 活 动" style="font-size:16px;">
                         </form>
                     </div>
                     <div class="col-md-9">
@@ -157,12 +164,13 @@
                     <div class="portfolio-container isotope" style="width:100%;overflow: hidden; position: relative; height: 618px;">
                         <?php  foreach ($actTemLIst as $row){?>
                             <div class="col-md-3 work-post isotope-item tem-<?php echo $row->LIMIT;?>">
+                                <input type="hidden" value="<?php echo $row->ID;?>"/>
                                 <div class="check" hidden >
-                                    <div style="height:15px; width:15px;"></div>
+                                    <div style="height:8px; width:8px;"></div>
                                 </div>
                                 <ul class="pricing-table basic">
                                     <li class="title">
-                                        <p><?php echo $row->TITLE;?></p>
+                                        <p style="font-size:18px;"><?php echo $row->TITLE;?><span>（限<?php echo $row->LIMIT;?>人）</span></p>
                                         <span><?php echo $row->DESC;?></span>
                                     </li>
                                     <li>
@@ -175,7 +183,12 @@
                                         <p><?php echo $row->PERSON_GRADE;?>级以上可参加</p>
                                     </li>
                                     <li>
-                                        <p><?php if($row->STARTER_GRADE==0){?>荣誉会员<?php }else{ echo $row->STARTER_GRADE; }?>级以上可发起</p>
+                                        <p><?php if($row->STARTER_GRADE==0){
+                                                if($row->STATUS==0){
+                                                    ?>活动管理员<?php
+                                                }else{
+                                                    ?>荣誉会员<?php
+                                                }}else{ echo $row->STARTER_GRADE; }?>级以上可发起</p>
                                     </li>
                                 </ul>
                             </div>
@@ -183,9 +196,6 @@
 
                     </div>
                         </div>
-
-
-
                 </div>
             </div>
             <div>
@@ -208,22 +218,80 @@
     <script src="<?php echo base_url('assets/js/bootstrap.js');?>"></script>
     <script src="<?php echo base_url('assets/js/jquery.isotope.min.js');?>"></script>
     <script src="<?php echo base_url('assets/lib/laydate/laydate.js');?>"></script>
+    <script src="<?php echo base_url('assets/lib/layer/layer.js');?>"></script>
+    <script src="<?php echo base_url('assets/js/jquery.form.js');?>"></script>
     <script type="text/javascript" src="<?php echo base_url('assets/js/script.js');?>"></script>
     <script>
         $(function(){
             $("#content").css("min-height",$(window).height()-88+"px");
-            $('.pagination-list a').click(function(e){
-                e.preventDefault();
-                var a=parseInt($(this).attr("data-ci-pagination-page"));
-                $('#form').attr("action",$('#form').attr("action")+"/"+a)
-                $('#form').submit();
-            })
             $('.isotope-item').click(function(){
                 $(".shadow").removeClass("shadow");
                 $(".check").hide();
                 $(this).find(".pricing-table").addClass("shadow");
                 $(this).find(".check").show();
-            })
+                var temid=$(this).find("input").val();
+                $("input[name=temId]").val(temid);
+            });
+            $('#contact-form').ajaxForm({
+                beforeSubmit: function(a,f,o) {
+                    <?php if(isset($_SESSION['user'])){?>
+                    if($("input[name=title]").val()==false){
+                        layer.msg('请填写活动名称！');
+                        return false;
+                    }
+                    if($("input[name=brief]").val()==false){
+                        layer.msg('请填写活动简介！');
+                        return false;
+                    }
+                    if($("input[name=min_part]").val()==false){
+                        layer.msg('请填写最低参与人数！');
+                        return false;
+                    }
+                    if($("input[name=min_part]").val()<2){
+                        layer.msg('最低参与人数至少为2！');
+                        return false;
+                    }
+                    if($("input[name=location]").val()==false){
+                        layer.msg('请填写活动地点！');
+                        return false;
+                    }
+                    if($("input[name=start_on]").val()==false){
+                        layer.msg('请选择活动开始时间！');
+                        return false;
+                    }
+                    if($("input[name=end_on]").val()==false){
+                        layer.msg('请选择活动结束时间！');
+                        return false;
+                    }
+                    if($("input[name=reg_start_on]").val()==false){
+                        layer.msg('请选择报名开始时间！');
+                        return false;
+                    }
+                    if($("input[name=reg_end_on]").val()==false){
+                        layer.msg('请选择报名结束时间！');
+                        return false;
+                    }
+                    if($("input[name=temId]").val()==false){
+                        layer.msg('请选择一种活动！');
+                        return false;
+                    }
+                    return true;
+                    <?php }else{ ?>
+                    layer.msg('请先登录！');
+                    return false;
+                    <?php }?>
+                },
+                dataType:"json",
+                success: function(data) {
+                    if(data.success){
+                        layer.msg(data.msg);
+                        $("#contact-form :input").not(":button, :submit").val("");
+                        $('textarea').val("");
+                    }else{
+                        layer.msg(data.msg);
+                    }
+                }
+            });
             laydate.skin('yalan');
             laydate(actStart);
             laydate(actEnd);
@@ -237,6 +305,7 @@
             //max: '2099-06-16 23:59:59', //最大日期
             istime: true,
             istoday: false,
+            init:false,
             choose: function(datas){
                 actEnd.min = datas; //开始日选好后，重置结束日的最小日期
                 actEnd.start = datas;//将结束日的初始值设定为开始日
@@ -279,14 +348,6 @@
                 actEnd.min=datas;
             }
         };
-
-        function enter(){
-            <?php if(isset($_SESSION['user'])){?>
-            //alert("登录过了")
-            <?php }else{ ?>
-            //alert("请先登录！");
-            <?php }?>
-        }
     </script>
 </body>
 </html>

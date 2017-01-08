@@ -32,7 +32,7 @@ class Act extends CI_Controller
         $arr=array(
             'actList'=> $acts
         );
-        $this->load->view('act/actList',$arr);
+        $this->load->view('club/act/actList',$arr);
     }
 
     public function myJoinedActList(){
@@ -56,7 +56,7 @@ class Act extends CI_Controller
         $arr=array(
             'actList'=> $acts
         );
-        $this->load->view('act/myJoinedActList',$arr);
+        $this->load->view('club/act/myJoinedActList',$arr);
     }
 
     public function myStartActList(){
@@ -77,7 +77,7 @@ class Act extends CI_Controller
         $arr=array(
             'actList'=> $acts
         );
-        $this->load->view('act/myStartActList',$arr);
+        $this->load->view('club/act/myStartActList',$arr);
     }
 
     public function approveActList(){
@@ -97,7 +97,7 @@ class Act extends CI_Controller
         $arr=array(
             'actList'=>$acts
         );
-        $this->load->view('act/approveActList',$arr);
+        $this->load->view('club/act/approveActList',$arr);
     }
 
     public function actAdd(){
@@ -143,7 +143,7 @@ class Act extends CI_Controller
             'isStarter' => $isStarter,
             'participants' => $participants
         );
-        $this->load->view('act/viewAct',$arr);
+        $this->load->view('club/act/viewAct',$arr);
     }
 
     public function approveAct(){
@@ -164,7 +164,7 @@ class Act extends CI_Controller
         $arr=array(
             'act'=>$act
         );
-        $this->load->view('act/approveAct',$arr);
+        $this->load->view('club/act/approveAct',$arr);
     }
 
     public function doApproveAct(){
@@ -218,7 +218,7 @@ class Act extends CI_Controller
         $arr=array(
             'confirmList'=>$confirmList,
         );
-        $this->load->view('act/pendingConfirmList', $arr);
+        $this->load->view('club/act/pendingConfirmList', $arr);
     }
 
     public function viewPendingConfirm(){
@@ -235,7 +235,7 @@ class Act extends CI_Controller
             'act'=>$act,
             'toUser' => $toUser
         );
-        $this->load->view('act/viewPendingConfirm', $arr);
+        $this->load->view('club/act/viewPendingConfirm', $arr);
     }
 
     public function doConfirm(){

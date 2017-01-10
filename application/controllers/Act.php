@@ -83,7 +83,7 @@ class Act extends CI_Controller
     public function approveActList(){
         $this->load->model('t_act');
         $this->load->model('t_user');
-        $acts = $this->t_act->getActList('status = 100 or status = 400');
+        $acts = $this->t_act->getActList('status = 100 or status = 200');
         foreach ($acts as $row){
             $province=$this->t_user->getProvinceByCode($row->PROVINCE_CODE);
             if(count($province)>0){

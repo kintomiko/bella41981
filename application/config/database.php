@@ -67,7 +67,7 @@ $active_record = TRUE;
 $db['default']['hostname'] = '127.0.0.1';
 $db['default']['username'] = 'dev';
 $db['default']['password'] = '123123';
-$db['default']['port'] = '3306';
+$db['default']['port'] = '3307';
 $db['default']['database'] = 'app_90zone';
 
 //sae

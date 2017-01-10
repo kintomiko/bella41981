@@ -74,6 +74,7 @@ class T_act extends MY_Model{
     public function approveAct($id){
         if (!session_id()) session_start();
         $this->db->set('status',200);
+        $this->db->set('weight',1);
         $this->db->where('id',$id);
         $this->db->update('t_act');
 
@@ -84,13 +85,24 @@ class T_act extends MY_Model{
 
     public function rejectAct($id){
         if (!session_id()) session_start();
-        $this->db->set('status',400);
+        $this->db->set('status',T_act::ACT_REJECTED);
         $this->db->where('id',$id);
         $this->db->update('t_act');
 
         $this->load->model('t_system');
         $act = $this->getAct($id);
         $this->t_system->operateAdd($_SESSION['user']->USER_ID,"拒绝活动",$act->TITLE);
+    }
+
+    public function startActConfirm($id){
+        if (!session_id()) session_start();
+        $this->db->set('status',T_act::ACT_START_CONFIRM);
+        $this->db->where('id',$id);
+        $this->db->update('t_act');
+
+        $this->load->model('t_system');
+        $act = $this->getAct($id);
+        $this->t_system->operateAdd($_SESSION['user']->USER_ID,"开始确认活动",$act->TITLE);
     }
 
     public function isInAct($actId, $userId){

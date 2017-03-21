@@ -41,7 +41,8 @@ class T_act extends MY_Model{
 
     public function getAct($id){
         $query = $this->db->get_where('t_act',array('ID' => $id));
-        return $query->result()[0];
+        $temp = $query->result();
+        return $temp[0];
     }
 
     public function getActPart($actId, $userId){

@@ -177,6 +177,9 @@ class Act extends CI_Controller
         } else if ($action == 'reject') {
             $this->t_act->rejectAct($id);
             echo "true";
+        } else if($action == 'start_confirm'){
+            $this->t_act->startActConfirm($id);
+            echo "true";
         }
     }
 
